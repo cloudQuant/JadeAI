@@ -396,6 +396,10 @@ PDF 导出使用 Puppeteer Core + @sparticuz/chromium。50 套模板各有独立
 
 </details>
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=twwch/JadeAI&type=date&legend=top-left)](https://www.star-history.com/#twwch/JadeAI&type=date&legend=top-left)
+
 ## 许可证
 
 [Apache License 2.0](LICENSE)

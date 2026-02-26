@@ -396,6 +396,10 @@ PDF export uses Puppeteer Core with @sparticuz/chromium. Each of the 50 template
 
 </details>
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=twwch/JadeAI&type=date&legend=top-left)](https://www.star-history.com/#twwch/JadeAI&type=date&legend=top-left)
+
 ## License
 
 [Apache License 2.0](LICENSE)
