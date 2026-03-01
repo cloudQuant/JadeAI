@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 const SLATE_800 = '#1e293b';
 const GOLD = '#c4a747';
@@ -17,7 +17,7 @@ function buildFinanceSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<p class="text-sm leading-relaxed text-slate-600">${esc((c as SummaryContent).text)}</p>`;
+    return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed text-slate-600');
   }
 
   if (section.type === 'work_experience') {

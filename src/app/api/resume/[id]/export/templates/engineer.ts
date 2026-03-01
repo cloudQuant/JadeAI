@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 import { buildClassicSectionContent } from './classic';
 
 const PRIMARY = '#1e293b';
@@ -22,7 +22,7 @@ function buildEngineerSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<p class="border-l-2 pl-4 text-sm leading-relaxed" style="color:${BODY_TEXT};border-color:${ACCENT}">${esc((c as SummaryContent).text)}</p>`;
+    return buildSummaryHtml((c as SummaryContent).text || '', 'border-l-2 pl-4 text-sm leading-relaxed', `color:${BODY_TEXT};border-color:${ACCENT}`);
   }
 
   if (section.type === 'work_experience') {

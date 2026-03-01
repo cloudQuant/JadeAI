@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#1e293b';
 const ACCENT = '#8b5cf6';
@@ -19,7 +19,7 @@ function buildZigzagSectionContent(section: Section, isEven: boolean): string {
   const alignReverse = isEven ? '' : 'flex-row-reverse';
 
   if (section.type === 'summary') {
-    return `<p class="text-sm leading-relaxed text-zinc-600">${esc((c as SummaryContent).text)}</p>`;
+    return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed text-zinc-600');
   }
   if (section.type === 'work_experience') {
     return `<div class="space-y-3 text-left">${((c as WorkExperienceContent).items || []).map((it: any) => `<div>

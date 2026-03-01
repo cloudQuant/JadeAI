@@ -9,12 +9,13 @@ import type {
   SummaryContent,
   CustomContent,
 } from '@/types/resume';
-import { safe, type ResumeWithSections } from './utils';
+import { safe, localizeSectionTitles, type ResumeWithSections } from './utils';
 
 export function generatePlainText(resume: ResumeWithSections): string {
+  const localizedResume = localizeSectionTitles(resume);
   const lines: string[] = [];
 
-  for (const section of resume.sections) {
+  for (const section of localizedResume.sections) {
     if (!section.visible) continue;
 
     switch (section.type) {

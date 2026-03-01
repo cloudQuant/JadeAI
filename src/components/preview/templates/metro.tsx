@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#1e293b';
 const AMBER = '#f59e0b';
@@ -73,9 +74,7 @@ function MetroSectionContent({ section }: { section: any }) {
 
   if (section.type === 'summary') {
     return (
-      <p className="border-l-3 pl-4 text-sm leading-relaxed text-zinc-600" style={{ borderColor: AMBER }}>
-        {(content as SummaryContent).text}
-      </p>
+      <SummaryText text={(content as SummaryContent).text || ''} className="border-l-3 pl-4 text-sm leading-relaxed text-zinc-600" style={{ borderColor: AMBER }} />
     );
   }
 

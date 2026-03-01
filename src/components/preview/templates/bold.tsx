@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 export function BoldTemplate({ resume }: { resume: Resume }) {
   const personalInfo = resume.sections.find((s) => s.type === 'personal_info');
@@ -59,7 +60,7 @@ function BoldSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm leading-relaxed text-zinc-600">{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed text-zinc-600" />;
   }
 
   if (section.type === 'work_experience') {

@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#1e293b';
 const ACCENT = '#b91c1c';
@@ -18,7 +18,7 @@ function buildRibbonSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<p class="text-sm leading-relaxed text-zinc-600">${esc((c as SummaryContent).text)}</p>`;
+    return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed text-zinc-600');
   }
   if (section.type === 'work_experience') {
     return `<div class="space-y-3">${((c as WorkExperienceContent).items || []).map((it: any) => `<div class="border-l-2 pl-3" style="border-color:${RIBBON}">

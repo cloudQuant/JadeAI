@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useCallback, useRef, useState, useEffect, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { Plus, GripVertical, User, FileText, Briefcase, GraduationCap, Wrench, FolderKanban, Award, Languages, LayoutList, Pencil } from 'lucide-react';
 import { generateId } from '@/lib/utils';
@@ -39,18 +39,33 @@ const sectionIcons: Record<string, React.ElementType> = {
   custom: LayoutList,
 };
 
+// Map section type to i18n key for dynamic labels
+const sectionTypeI18nKeys: Record<SectionType, string> = {
+  personal_info: 'sections.personalInfo',
+  summary: 'sections.summary',
+  work_experience: 'sections.workExperience',
+  education: 'sections.education',
+  skills: 'sections.skills',
+  projects: 'sections.projects',
+  certifications: 'sections.certifications',
+  languages: 'sections.languages',
+  custom: 'sections.custom',
+};
+
 function SortableSidebarItem({
   section,
   isSelected,
   onSelect,
   onRename,
   icon: Icon,
+  displayTitle,
 }: {
   section: ResumeSection;
   isSelected: boolean;
   onSelect: () => void;
   onRename?: (title: string) => void;
   icon: React.ElementType;
+  displayTitle: string; // Dynamic title based on current locale
 }) {
   const {
     attributes,
@@ -125,7 +140,7 @@ function SortableSidebarItem({
             className="h-5 w-full min-w-0 rounded border border-pink-300 bg-transparent px-1 text-sm outline-none"
           />
         ) : (
-          <span className="truncate">{section.title}</span>
+          <span className="truncate">{displayTitle}</span>
         )}
       </button>
       {isCustom && !isRenaming && (
@@ -222,6 +237,16 @@ export function EditorSidebar({ sections, onAddSection, onReorderSections }: Edi
     onAddSection(newSection);
   };
 
+  // Create a map of dynamic titles for each section based on current locale
+  const sectionTitleMap = useMemo(() => {
+    const map = new Map<string, string>();
+    sections.forEach((section) => {
+      // Use i18n translation for the section type
+      map.set(section.id, t(sectionTypeI18nKeys[section.type as SectionType]));
+    });
+    return map;
+  }, [sections, t]);
+
   return (
     <div data-tour="sidebar" className="w-56 shrink-0 border-r bg-white dark:bg-zinc-900 dark:border-zinc-800">
       <div className="p-3">
@@ -242,6 +267,7 @@ export function EditorSidebar({ sections, onAddSection, onReorderSections }: Edi
             >
               {sections.map((section) => {
                 const Icon = sectionIcons[section.type] || LayoutList;
+                const displayTitle = sectionTitleMap.get(section.id) || section.title;
                 return (
                   <SortableSidebarItem
                     key={section.id}
@@ -250,6 +276,7 @@ export function EditorSidebar({ sections, onAddSection, onReorderSections }: Edi
                     onSelect={() => handleSelect(section.id)}
                     onRename={section.type === 'custom' ? (title) => updateSectionTitle(section.id, title) : undefined}
                     icon={Icon}
+                    displayTitle={displayTitle}
                   />
                 );
               })}

@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#1e293b';
 const ACCENT = '#8b5cf6';
@@ -88,7 +89,7 @@ function ZigzagSectionContent({ section, isEven }: { section: any; isEven: boole
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm leading-relaxed text-zinc-600">{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed text-zinc-600" />;
   }
 
   if (section.type === 'work_experience') {

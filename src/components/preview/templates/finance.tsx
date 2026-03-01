@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const SLATE_800 = '#1e293b';
 const GOLD = '#c4a747';
@@ -56,7 +57,7 @@ function FinanceSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm leading-relaxed text-slate-600">{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed text-slate-600" />;
   }
 
   if (section.type === 'work_experience') {

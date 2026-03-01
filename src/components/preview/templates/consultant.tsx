@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const GRAY_700 = '#374151';
 const BLUE_600 = '#2563eb';
@@ -53,7 +54,7 @@ function ConsultantSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm leading-relaxed text-gray-600">{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed text-gray-600" />;
   }
 
   if (section.type === 'work_experience') {

@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#78350f';
 const ACCENT = '#92400e';
@@ -19,7 +19,7 @@ function buildRetroSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<p class="text-center text-sm italic leading-relaxed" style="color:${ACCENT}">&ldquo;${esc((c as SummaryContent).text)}&rdquo;</p>`;
+    return `<div class="text-center text-sm italic leading-relaxed" style="color:${ACCENT}">&ldquo;${buildSummaryHtml((c as SummaryContent).text || '', 'inline')}&rdquo;</div>`;
   }
 
   if (section.type === 'work_experience') {

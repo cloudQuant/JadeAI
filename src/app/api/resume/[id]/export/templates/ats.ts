@@ -8,11 +8,11 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 function buildAtsSectionContent(section: Section): string {
   const c = section.content as any;
-  if (section.type === 'summary') return `<p class="text-sm leading-relaxed text-zinc-700">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed text-zinc-700');
   if (section.type === 'work_experience') {
     return `<div class="space-y-3">${((c as WorkExperienceContent).items || []).map((it: any) => `<div>
       <div class="flex items-baseline justify-between"><div><span class="text-sm font-bold text-black">${esc(it.position)}</span>${it.company ? `<span class="text-sm text-zinc-700">, ${esc(it.company)}</span>` : ''}${it.location ? `<span class="text-sm text-zinc-500">, ${esc(it.location)}</span>` : ''}</div><span class="shrink-0 text-sm text-zinc-600">${esc(it.startDate)} - ${it.current ? 'Present' : esc(it.endDate)}</span></div>

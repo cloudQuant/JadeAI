@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 export function AtsTemplate({ resume }: { resume: Resume }) {
   const personalInfo = resume.sections.find((s) => s.type === 'personal_info');
@@ -54,7 +55,7 @@ function AtsSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm leading-relaxed text-zinc-700">{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed text-zinc-700" />;
   }
 
   if (section.type === 'work_experience') {

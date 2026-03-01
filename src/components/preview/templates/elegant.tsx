@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const GOLD = '#d4af37';
 
@@ -52,7 +53,7 @@ function ElegantSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-center text-sm leading-relaxed text-zinc-600 italic">{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-center text-sm leading-relaxed text-zinc-600 italic" />;
   }
 
   if (section.type === 'work_experience') {

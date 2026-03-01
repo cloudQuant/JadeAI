@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#1a1a1a';
 const ACCENT = '#dc2626';

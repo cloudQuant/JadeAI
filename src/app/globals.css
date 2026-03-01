@@ -269,3 +269,53 @@
 .ai-markdown td {
   @apply border border-zinc-200 px-2 py-1 text-zinc-600 dark:border-zinc-700 dark:text-zinc-400;
 }
+
+/* Summary rich text content in preview */
+.summary-content {
+  @apply text-sm text-zinc-600 leading-relaxed;
+}
+.summary-content p,
+.summary-content div {
+  @apply mb-2 last:mb-0;
+}
+.summary-content ul,
+.summary-content ol {
+  @apply mb-2 ml-4 last:mb-0;
+}
+.summary-content ul {
+  @apply list-disc;
+}
+.summary-content ol {
+  @apply list-decimal;
+}
+.summary-content li {
+  @apply mb-1 last:mb-0;
+}
+.summary-content strong {
+  @apply font-semibold text-zinc-800 dark:text-zinc-200;
+}
+.summary-content em {
+  @apply italic;
+}
+.summary-content u {
+  @apply underline;
+}
+.summary-content h3,
+.summary-content h4 {
+  @apply font-semibold mb-1 mt-2 first:mt-0 text-zinc-800 dark:text-zinc-200;
+}
+.summary-content h3 {
+  @apply text-base;
+}
+.summary-content h4 {
+  @apply text-sm;
+}
+.summary-content br {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+/* Ensure empty divs (used for line breaks) have height */
+.summary-content div:empty::before {
+  content: '\00a0';
+  display: inline-block;
+}

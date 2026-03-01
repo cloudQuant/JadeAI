@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#78350f';
 const ACCENT = '#92400e';
@@ -88,7 +89,7 @@ function RetroSectionContent({ section }: { section: any }) {
   if (section.type === 'summary') {
     return (
       <p className="text-center text-sm italic leading-relaxed" style={{ color: ACCENT }}>
-        &ldquo;{(content as SummaryContent).text}&rdquo;
+        &ldquo;<SummaryText text={(content as SummaryContent).text || ''} className="inline" />&rdquo;
       </p>
     );
   }

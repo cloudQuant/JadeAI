@@ -4,13 +4,13 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 function buildCleanSectionContent(s: Section): string {
   const c = s.content as any;
   const TL = '#0d9488';
 
-  if (s.type === 'summary') return `<p class="text-sm leading-relaxed text-zinc-600">${esc(c.text)}</p>`;
+  if (s.type === 'summary') return buildSummaryHtml(c.text || '', 'text-sm leading-relaxed text-zinc-600');
 
   if (s.type === 'work_experience') {
     return `<div class="space-y-4">${(c.items || []).map((it: any) => `<div>

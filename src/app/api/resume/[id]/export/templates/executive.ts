@@ -8,13 +8,13 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 function buildExecutiveSectionContent(section: Section): string {
   const c = section.content as any;
   const CHARCOAL = '#2d3436';
   const EMERALD = '#00b894';
-  if (section.type === 'summary') return `<p class="text-sm leading-relaxed text-zinc-600">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed text-zinc-600');
   if (section.type === 'work_experience') {
     return `<div class="space-y-4">${((c as WorkExperienceContent).items || []).map((it: any) => `<div>
       <div class="flex items-baseline justify-between"><div><span class="text-sm font-bold" style="color:${CHARCOAL}">${esc(it.position)}</span>${it.company ? `<span class="text-sm text-zinc-600"> | ${esc(it.company)}</span>` : ''}</div><span class="shrink-0 rounded px-2 py-0.5 text-xs font-medium text-white" style="background:${EMERALD}">${esc(it.startDate)} – ${it.current ? 'Present' : esc(it.endDate)}</span></div>

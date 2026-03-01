@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const GRADIENT = 'linear-gradient(135deg, #7c3aed 0%, #f97316 100%)';
 const PRIMARY = '#7c3aed';
@@ -82,9 +83,7 @@ function CreativeSectionContent({ section }: { section: any }) {
 
   if (section.type === 'summary') {
     return (
-      <p className="rounded-lg bg-zinc-50 p-4 text-sm leading-relaxed text-zinc-600 italic">
-        {(content as SummaryContent).text}
-      </p>
+      <SummaryText text={(content as SummaryContent).text || ''} className="rounded-lg bg-zinc-50 p-4 text-sm leading-relaxed text-zinc-600 italic" />
     );
   }
 

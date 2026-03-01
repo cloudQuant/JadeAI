@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#881337';
 const ACCENT = '#be185d';
@@ -18,7 +18,7 @@ const ROSE_100 = '#ffe4e6';
 function buildRoseSectionContent(section: Section): string {
   const c = section.content as any;
 
-  if (section.type === 'summary') return `<p class="rounded-xl px-4 py-3 text-sm italic leading-relaxed" style="background-color:${ROSE_50};color:#57534e">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'rounded-xl px-4 py-3 text-sm italic leading-relaxed', `background-color:${ROSE_50};color:#57534e`);
 
   if (section.type === 'work_experience') {
     return `<div class="space-y-4">${((c as WorkExperienceContent).items || []).map((it: any) => `<div class="rounded-xl border p-4" style="border-color:${ROSE_100}">

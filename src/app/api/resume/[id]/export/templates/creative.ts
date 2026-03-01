@@ -8,14 +8,14 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 function buildCreativeSectionContent(section: Section): string {
   const c = section.content as any;
   const GRADIENT = 'linear-gradient(135deg,#7c3aed 0%,#f97316 100%)';
   const PRIMARY = '#7c3aed';
 
-  if (section.type === 'summary') return `<p class="rounded-lg bg-zinc-50 p-4 text-sm leading-relaxed text-zinc-600 italic">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'rounded-lg bg-zinc-50 p-4 text-sm leading-relaxed text-zinc-600 italic');
   if (section.type === 'work_experience') {
     return `<div class="space-y-4">${((c as WorkExperienceContent).items || []).map((it: any) => `<div class="relative rounded-lg border border-zinc-100 p-4">
       <div class="absolute left-0 top-0 h-full w-1 rounded-l-lg" style="background:${GRADIENT}"></div>

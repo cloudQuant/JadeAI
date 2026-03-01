@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { GripVertical, X, Eye, EyeOff, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEditorStore } from '@/stores/editor-store';
@@ -17,6 +17,7 @@ import { ProjectsSection } from './sections/projects';
 import { CertificationsSection } from './sections/certifications';
 import { LanguagesSection } from './sections/languages';
 import { CustomSection } from './sections/custom-section';
+import { getSectionTitle } from '@/lib/constants';
 
 interface SectionWrapperProps {
   section: ResumeSection;
@@ -38,11 +39,17 @@ const sectionComponents: Record<string, React.ComponentType<{ section: ResumeSec
 
 export function SectionWrapper({ section, onUpdate, onRemove }: SectionWrapperProps) {
   const t = useTranslations('editor');
+  const locale = useLocale();
   const { selectedSectionId, selectSection, showAiChat, toggleAiChat } = useEditorStore();
   const { toggleSectionVisibility, updateSectionTitle } = useResumeStore();
   const { attributes, listeners } = useDragHandle();
   const isSelected = selectedSectionId === section.id;
   const [isRenaming, setIsRenaming] = useState(false);
+  // Use dynamic title based on current locale for built-in sections
+  // For custom sections, use the stored title
+  const defaultTitle = getSectionTitle(section.type as any, locale);
+  const displayTitle = section.type === 'custom' ? section.title : defaultTitle;
+
   const [renameValue, setRenameValue] = useState(section.title);
   const renameInputRef = useRef<HTMLInputElement>(null);
 
@@ -98,7 +105,7 @@ export function SectionWrapper({ section, onUpdate, onRemove }: SectionWrapperPr
               className={`text-sm font-semibold text-zinc-700 dark:text-zinc-200 ${isCustom ? 'cursor-text rounded px-1 -mx-1 hover:bg-zinc-100 dark:hover:bg-zinc-700' : ''}`}
               onDoubleClick={isCustom ? (e) => { e.stopPropagation(); setRenameValue(section.title); setIsRenaming(true); } : undefined}
             >
-              {section.title}
+              {displayTitle}
             </h3>
           )}
         </div>

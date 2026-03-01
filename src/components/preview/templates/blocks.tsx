@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#37352f';
 const ACCENT = '#2383e2';
@@ -77,7 +78,7 @@ function BlocksSectionContent({ section }: { section: any }) {
   if (section.type === 'summary') {
     return (
       <div className="rounded-md p-3" style={{ backgroundColor: SUBTLE_BG }}>
-        <p className="text-sm leading-relaxed" style={{ color: PRIMARY }}>{(content as SummaryContent).text}</p>
+        <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed" style={{ color: PRIMARY }} />
       </div>
     );
   }

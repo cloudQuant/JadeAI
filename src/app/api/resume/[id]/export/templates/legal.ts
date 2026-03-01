@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 import { buildClassicSectionContent } from './classic';
 
 const PRIMARY = '#1a472a';
@@ -21,7 +21,7 @@ function buildLegalSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<p class="text-sm italic leading-relaxed" style="color:${BODY_TEXT}">${esc((c as SummaryContent).text)}</p>`;
+    return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm italic leading-relaxed', `color:${BODY_TEXT}`);
   }
 
   if (section.type === 'work_experience') {

@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#0f172a';
 const ACCENT = '#0891b2';
@@ -68,9 +69,7 @@ function ScientistSectionContent({ section }: { section: any }) {
 
   if (section.type === 'summary') {
     return (
-      <p className="text-sm italic leading-relaxed" style={{ color: BODY_TEXT }}>
-        {(content as SummaryContent).text}
-      </p>
+      <SummaryText text={(content as SummaryContent).text || ''} className="text-sm italic leading-relaxed" style={{ color: BODY_TEXT }} />
     );
   }
 

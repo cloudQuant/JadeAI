@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 const RED = '#dc2626';
 const TEXT = '#18181b';
@@ -16,7 +16,7 @@ const TEXT = '#18181b';
 function buildSwissSectionContent(section: Section): string {
   const c = section.content as any;
 
-  if (section.type === 'summary') return `<p class="text-sm leading-relaxed" style="color:#3f3f46">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed', 'color:#3f3f46');
 
   if (section.type === 'work_experience') {
     return `<div class="space-y-4">${((c as WorkExperienceContent).items || []).map((it: any) => `<div class="grid grid-cols-[140px_1fr] gap-4">

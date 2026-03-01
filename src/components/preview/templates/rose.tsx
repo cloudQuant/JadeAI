@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#881337';
 const ACCENT = '#be185d';
@@ -70,9 +71,7 @@ function RoseSectionContent({ section }: { section: any }) {
 
   if (section.type === 'summary') {
     return (
-      <p className="rounded-xl px-4 py-3 text-sm italic leading-relaxed" style={{ backgroundColor: ROSE_50, color: '#57534e' }}>
-        {(content as SummaryContent).text}
-      </p>
+      <SummaryText text={(content as SummaryContent).text || ''} className="rounded-xl px-4 py-3 text-sm italic leading-relaxed" style={{ backgroundColor: ROSE_50, color: '#57534e' }} />
     );
   }
 

@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#1c1917';
 const ACCENT = '#a8a29e';
@@ -16,7 +16,7 @@ const ACCENT = '#a8a29e';
 function buildJapaneseSectionContent(section: Section): string {
   const c = section.content as any;
 
-  if (section.type === 'summary') return `<p class="text-sm font-light leading-loose" style="color:#57534e">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm font-light leading-loose', 'color:#57534e');
 
   if (section.type === 'work_experience') {
     return `<div class="space-y-6">${((c as WorkExperienceContent).items || []).map((it: any) => `<div>

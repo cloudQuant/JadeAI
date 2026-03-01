@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const BLUE = '#2563eb';
 const YELLOW = '#eab308';
@@ -80,7 +81,7 @@ function BerlinSectionContent({ section }: { section: any }) {
   if (section.type === 'summary') {
     return (
       <div className="border-l-4 pl-4" style={{ borderColor: BLUE }}>
-        <p className="text-sm leading-relaxed text-zinc-600">{(content as SummaryContent).text}</p>
+        <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed text-zinc-600" />
       </div>
     );
   }

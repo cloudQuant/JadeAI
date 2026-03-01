@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const SLATE_500 = '#64748b';
 const SLATE_400 = '#94a3b8';
@@ -50,7 +51,7 @@ function NordicSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm font-light leading-relaxed" style={{ color: SLATE_500 }}>{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm font-light leading-relaxed" style={{ color: SLATE_500 }} />;
   }
 
   if (section.type === 'work_experience') {

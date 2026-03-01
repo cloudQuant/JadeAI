@@ -1,8 +1,9 @@
 'use client';
 
 import { useId } from 'react';
+import { useLocale } from 'next-intl';
 import type { Resume, ThemeConfig } from '@/types/resume';
-import { BACKGROUND_TEMPLATES } from '@/lib/constants';
+import { BACKGROUND_TEMPLATES, getSectionTitle, type SectionType } from '@/lib/constants';
 import { ClassicTemplate } from './templates/classic';
 import { ModernTemplate } from './templates/modern';
 import { MinimalTemplate } from './templates/minimal';
@@ -62,6 +63,27 @@ import { MosaicTemplate } from './templates/mosaic';
 
 interface ResumePreviewProps {
   resume: Resume;
+}
+
+/**
+ * Returns a resume with section titles localized based on the current locale.
+ * Section titles are dynamically replaced unless the user has customized them.
+ */
+function useLocalizedResume(resume: Resume): Resume {
+  const locale = useLocale();
+
+  // Only localize if locale differs from resume language
+  if (resume.language === locale) {
+    return resume;
+  }
+
+  return {
+    ...resume,
+    sections: resume.sections.map((section) => ({
+      ...section,
+      title: getSectionTitle(section.type as SectionType, locale),
+    })),
+  };
 }
 
 const templateMap: Record<string, React.ComponentType<{ resume: Resume }>> = {
@@ -220,6 +242,7 @@ function buildThemeCSS(scopeId: string, theme: ThemeConfig, template: string): s
 }
 
 export function ResumePreview({ resume }: ResumePreviewProps) {
+  const localizedResume = useLocalizedResume(resume);
   const Template = templateMap[resume.template] || ClassicTemplate;
   const scopeId = useId();
   const theme: ThemeConfig = { ...DEFAULT_THEME, ...(resume.themeConfig || {}) };
@@ -227,7 +250,7 @@ export function ResumePreview({ resume }: ResumePreviewProps) {
   return (
     <div data-theme-scope={scopeId}>
       <style dangerouslySetInnerHTML={{ __html: buildThemeCSS(scopeId, theme, resume.template) }} />
-      <Template resume={resume} />
+      <Template resume={localizedResume} />
     </div>
   );
 }

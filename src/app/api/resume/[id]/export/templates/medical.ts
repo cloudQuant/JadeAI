@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const TEAL_800 = '#115e59';
 const TEAL_500 = '#0d9488';
@@ -18,7 +18,7 @@ function buildMedicalSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<p class="text-sm leading-relaxed text-gray-600">${esc((c as SummaryContent).text)}</p>`;
+    return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed text-gray-600');
   }
 
   if (section.type === 'work_experience') {

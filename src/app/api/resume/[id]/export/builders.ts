@@ -1,4 +1,4 @@
-import { esc, buildExportThemeCSS, DEFAULT_THEME, type ResumeWithSections } from './utils';
+import { esc, buildExportThemeCSS, DEFAULT_THEME, localizeSectionTitles, type ResumeWithSections } from './utils';
 import { BACKGROUND_TEMPLATES } from '@/lib/constants';
 import { buildClassicHtml } from './templates/classic';
 import { buildModernHtml } from './templates/modern';
@@ -133,11 +133,13 @@ const TEMPLATE_BUILDERS: Record<string, (r: ResumeWithSections) => string> = {
 };
 
 export function generateHtml(resume: ResumeWithSections, forPdf = false): string {
-  const builder = TEMPLATE_BUILDERS[resume.template] || buildClassicHtml;
-  const bodyHtml = builder(resume);
-  const theme = { ...DEFAULT_THEME, ...((resume as any).themeConfig || {}) };
-  const themeCSS = buildExportThemeCSS(theme, resume.template);
-  const isBackground = BACKGROUND_TEMPLATES.has(resume.template);
+  // Localize section titles before building HTML
+  const localizedResume = localizeSectionTitles(resume);
+  const builder = TEMPLATE_BUILDERS[localizedResume.template] || buildClassicHtml;
+  const bodyHtml = builder(localizedResume);
+  const theme = { ...DEFAULT_THEME, ...((localizedResume as any).themeConfig || {}) };
+  const themeCSS = buildExportThemeCSS(theme, localizedResume.template);
+  const isBackground = BACKGROUND_TEMPLATES.has(localizedResume.template);
 
   const fullDarkBg = FULL_DARK_TEMPLATES[resume.template];
   const isFullDark = !!fullDarkBg;
@@ -189,11 +191,11 @@ export function generateHtml(resume: ResumeWithSections, forPdf = false): string
     : '';
 
   return `<!DOCTYPE html>
-<html lang="${esc(resume.language || 'en')}">
+<html lang="${esc(localizedResume.language || 'en')}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${esc(resume.title)}</title>
+  <title>${esc(localizedResume.title)}</title>
   <script src="https://cdn.tailwindcss.com"><\/script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,6 +203,24 @@ export function generateHtml(resume: ResumeWithSections, forPdf = false): string
   <style>
     body { margin: 0; display: flex; justify-content: center; padding: 40px 20px; background: #f4f4f5; min-height: 100vh; }
     @media print { body { padding: 0 !important; background: white !important; } .resume-export > div { box-shadow: none !important; } }
+    /* Summary rich text content */
+    .summary-content p, .summary-content div { margin-bottom: 0.5rem; }
+    .summary-content p:last-child, .summary-content div:last-child { margin-bottom: 0; }
+    .summary-content ul, .summary-content ol { margin-bottom: 0.5rem; margin-left: 1rem; }
+    .summary-content ul:last-child, .summary-content ol:last-child { margin-bottom: 0; }
+    .summary-content ul { list-style-type: disc; }
+    .summary-content ol { list-style-type: decimal; }
+    .summary-content li { margin-bottom: 0.25rem; }
+    .summary-content li:last-child { margin-bottom: 0; }
+    .summary-content strong { font-weight: 600; color: #27272a; }
+    .summary-content em { font-style: italic; }
+    .summary-content u { text-decoration: underline; }
+    .summary-content h3, .summary-content h4 { font-weight: 600; margin-bottom: 0.25rem; margin-top: 0.5rem; color: #27272a; }
+    .summary-content h3:first-child, .summary-content h4:first-child { margin-top: 0; }
+    .summary-content h3 { font-size: 1rem; }
+    .summary-content h4 { font-size: 0.875rem; }
+    .summary-content br { display: block; margin-bottom: 0.5rem; }
+    .summary-content div:empty::before { content: '\\00a0'; display: inline-block; }
     ${themeCSS}
     ${pdfOverrides}
   </style>

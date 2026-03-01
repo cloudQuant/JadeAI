@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const GOLD = '#d4af37';
 const TEXT = '#000000';
@@ -17,7 +17,7 @@ const BG = '#fafaf9';
 function buildLuxeSectionContent(section: Section): string {
   const c = section.content as any;
 
-  if (section.type === 'summary') return `<p class="text-center text-sm italic leading-relaxed" style="color:#44403c">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'text-center text-sm italic leading-relaxed', 'color:#44403c');
 
   if (section.type === 'work_experience') {
     return `<div class="space-y-5">${((c as WorkExperienceContent).items || []).map((it: any) => `<div class="border-l-2 pl-4" style="border-color:${GOLD}">

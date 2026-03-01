@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#1c1917';
 const ACCENT = '#a8a29e';
@@ -63,7 +64,7 @@ function JapaneseSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm font-light leading-loose" style={{ color: '#57534e' }}>{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm font-light leading-loose" style={{ color: '#57534e' }} />;
   }
 
   if (section.type === 'work_experience') {

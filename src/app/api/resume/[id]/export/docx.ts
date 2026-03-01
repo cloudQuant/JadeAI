@@ -9,7 +9,7 @@ import type {
   SummaryContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, safe, type ResumeWithSections, type Section } from './utils';
+import { esc, safe, localizeSectionTitles, type ResumeWithSections, type Section } from './utils';
 
 function renderSectionHtml(section: Section): string {
   if (!section.visible) return '';
@@ -144,7 +144,8 @@ function renderSectionHtml(section: Section): string {
 }
 
 export function generateDocx(resume: ResumeWithSections): string {
-  const sectionsHtml = resume.sections.map(renderSectionHtml).join('\n');
+  const localizedResume = localizeSectionTitles(resume);
+  const sectionsHtml = localizedResume.sections.map(renderSectionHtml).join('\n');
 
   return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
 <head>

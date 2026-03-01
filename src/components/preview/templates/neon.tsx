@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const BG = '#111827';
 const CYAN = '#22d3ee';
@@ -85,9 +86,7 @@ function NeonSectionContent({ section }: { section: any }) {
   if (section.type === 'summary') {
     return (
       <div className="rounded-lg p-4" style={{ border: `1px solid ${CYAN}20`, backgroundColor: `${CYAN}08` }}>
-        <p className="text-sm leading-relaxed" style={{ color: TEXT }}>
-          {(content as SummaryContent).text}
-        </p>
+        <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed" style={{ color: TEXT }} />
       </div>
     );
   }

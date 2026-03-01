@@ -1,5 +1,5 @@
 import { resumeRepository } from '@/lib/db/repositories/resume.repository';
-import { BACKGROUND_TEMPLATES } from '@/lib/constants';
+import { BACKGROUND_TEMPLATES, getSectionTitle, type SectionType } from '@/lib/constants';
 import type {
   PersonalInfoContent,
   SkillsContent,
@@ -35,6 +35,46 @@ export function isSectionEmpty(section: Section): boolean {
   }
   if ('items' in content) return !content.items?.length;
   return false;
+}
+
+// ─── Section title localization ──────────────────────────────
+
+export function localizeSectionTitles(resume: ResumeWithSections): ResumeWithSections {
+  const locale = resume.language || 'zh';
+  return {
+    ...resume,
+    sections: resume.sections.map((section: ResumeWithSections['sections'][number]) => {
+      if (section.type === 'custom') {
+        return section;
+      }
+      return {
+        ...section,
+        title: getSectionTitle(section.type as SectionType, locale),
+      };
+    }),
+  };
+}
+
+// ─── Summary HTML helper ─────────────────────────────────────
+
+export function buildSummaryHtml(text: string, className: string, style?: string): string {
+  let t = text || '';
+  t = t
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&nbsp;/g, '\u00A0');
+
+  const isHtml = /<[a-z\/][^>]*>/i.test(t);
+  if (isHtml) {
+    const sanitized = t
+      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+      .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+      .replace(/on\w+="[^"]*"/gi, '');
+    return `<div class="summary-content ${className}"${style ? ` style="${style}"` : ''}>${sanitized}</div>`;
+  }
+  return `<p class="${className}"${style ? ` style="${style}"` : ''}>${esc(t)}</p>`;
 }
 
 // ─── HTML helpers ─────────────────────────────────────────────

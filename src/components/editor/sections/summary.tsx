@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { EditableRichText } from '../fields/editable-rich-text';
+import { RichTextEditor } from '../fields/rich-text-editor';
 import type { ResumeSection, SummaryContent } from '@/types/resume';
 
 interface Props {
@@ -14,11 +14,13 @@ export function SummarySection({ section, onUpdate }: Props) {
   const content = section.content as SummaryContent;
 
   return (
-    <EditableRichText
-      label={t('description')}
-      value={content.text}
-      onChange={(v) => onUpdate({ text: v })}
-      rows={4}
-    />
+    <div className="space-y-1">
+      <label className="text-xs font-medium text-zinc-500 dark:text-zinc-400">{t('description')}</label>
+      <RichTextEditor
+        value={content.text || ''}
+        onChange={(v) => onUpdate({ text: v })}
+        placeholder={t('description')}
+      />
+    </div>
   );
 }

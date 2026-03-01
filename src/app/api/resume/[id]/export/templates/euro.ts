@@ -4,13 +4,13 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 function buildEuroSectionContent(s: Section): string {
   const c = s.content as any;
   const BL = '#1e40af';
 
-  if (s.type === 'summary') return `<p class="text-sm leading-relaxed text-zinc-600">${esc(c.text)}</p>`;
+  if (s.type === 'summary') return buildSummaryHtml(c.text || '', 'text-sm leading-relaxed text-zinc-600');
 
   if (s.type === 'work_experience') {
     return `<div class="space-y-3">${(c.items || []).map((it: any) => `<div>

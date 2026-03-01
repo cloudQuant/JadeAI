@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const RED = '#dc2626';
 const TEXT = '#18181b';
@@ -64,7 +65,7 @@ function SwissSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-sm leading-relaxed" style={{ color: '#3f3f46' }}>{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed" style={{ color: '#3f3f46' }} />;
   }
 
   if (section.type === 'work_experience') {

@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#4c1d95';
 const ACCENT = '#c084fc';
@@ -81,9 +82,7 @@ function WatercolorSectionContent({ section }: { section: any }) {
   if (section.type === 'summary') {
     return (
       <div className="rounded-xl p-4" style={{ backgroundColor: WASH }}>
-        <p className="text-sm leading-relaxed" style={{ color: TEXT_DARK }}>
-          {(content as SummaryContent).text}
-        </p>
+        <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed" style={{ color: TEXT_DARK }} />
       </div>
     );
   }

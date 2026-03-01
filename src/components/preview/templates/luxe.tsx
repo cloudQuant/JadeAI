@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const GOLD = '#d4af37';
 const TEXT = '#000000';
@@ -72,7 +73,7 @@ function LuxeSectionContent({ section }: { section: any }) {
 
   if (section.type === 'summary') {
     return (
-      <p className="text-center text-sm italic leading-relaxed" style={{ color: '#44403c' }}>{(content as SummaryContent).text}</p>
+      <SummaryText text={(content as SummaryContent).text || ''} className="text-center text-sm italic leading-relaxed" style={{ color: '#44403c' }} />
     );
   }
 

@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const CORAL = '#ff6b6b';
 
@@ -52,7 +53,7 @@ function DesignerSectionContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="border-l-4 pl-4 text-sm leading-relaxed text-zinc-600" style={{ borderColor: CORAL }}>{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="border-l-4 pl-4 text-sm leading-relaxed text-zinc-600" style={{ borderColor: CORAL }} />;
   }
 
   if (section.type === 'work_experience') {

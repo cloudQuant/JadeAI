@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const SLATE_500 = '#64748b';
 const SLATE_400 = '#94a3b8';
@@ -18,7 +18,7 @@ function buildNordicSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<p class="text-sm font-light leading-relaxed" style="color:${SLATE_500}">${esc((c as SummaryContent).text)}</p>`;
+    return buildSummaryHtml((c as SummaryContent).text || '', 'text-sm font-light leading-relaxed', `color:${SLATE_500}`);
   }
 
   if (section.type === 'work_experience') {

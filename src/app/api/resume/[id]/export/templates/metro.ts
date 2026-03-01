@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, buildHighlights, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#1e293b';
 const AMBER = '#f59e0b';
@@ -16,7 +16,7 @@ const AMBER = '#f59e0b';
 function buildMetroSectionContent(section: Section): string {
   const c = section.content as any;
 
-  if (section.type === 'summary') return `<p class="border-l-3 pl-4 text-sm leading-relaxed text-zinc-600" style="border-color:${AMBER}">${esc((c as SummaryContent).text)}</p>`;
+  if (section.type === 'summary') return buildSummaryHtml((c as SummaryContent).text || '', 'border-l-3 pl-4 text-sm leading-relaxed text-zinc-600', `border-color:${AMBER}`);
 
   if (section.type === 'work_experience') {
     return `<div class="space-y-4">${((c as WorkExperienceContent).items || []).map((it: any) => `<div class="border-l-3 pl-4" style="border-color:${AMBER}">

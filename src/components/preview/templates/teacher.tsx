@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#9a3412';
 const ACCENT = '#ea580c';
@@ -64,9 +65,7 @@ function TeacherSectionContent({ section }: { section: any }) {
 
   if (section.type === 'summary') {
     return (
-      <p className="rounded-lg p-3 text-sm leading-relaxed" style={{ color: BODY_TEXT, backgroundColor: WARM_BG }}>
-        {(content as SummaryContent).text}
-      </p>
+      <SummaryText text={(content as SummaryContent).text || ''} className="rounded-lg p-3 text-sm leading-relaxed" style={{ color: BODY_TEXT, backgroundColor: WARM_BG }} />
     );
   }
 

@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#1e1b4b';
 const ACCENT = '#f43f5e';
@@ -18,7 +18,7 @@ function buildArtisticSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<div class="rounded-lg p-4" style="border:2px dashed ${ACCENT}30;background-color:${PRIMARY}05"><p class="text-sm leading-relaxed text-zinc-600 italic">${esc((c as SummaryContent).text)}</p></div>`;
+    return `<div class="rounded-lg p-4" style="border:2px dashed ${ACCENT}30;background-color:${PRIMARY}05">${buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed text-zinc-600 italic')}</div>`;
   }
 
   if (section.type === 'work_experience') {

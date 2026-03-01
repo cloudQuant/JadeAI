@@ -2,6 +2,7 @@
 
 import type { Resume, PersonalInfoContent, SummaryContent, WorkExperienceContent, EducationContent, SkillsContent, ProjectsContent, CertificationsContent, LanguagesContent, CustomContent } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const LEFT_TYPES = new Set(['skills', 'languages', 'certifications', 'custom']);
 
@@ -136,7 +137,7 @@ function CompactRightContent({ section }: { section: any }) {
   const content = section.content;
 
   if (section.type === 'summary') {
-    return <p className="text-xs leading-relaxed text-zinc-600">{(content as SummaryContent).text}</p>;
+    return <SummaryText text={(content as SummaryContent).text || ''} className="text-xs leading-relaxed text-zinc-600" />;
   }
 
   if (section.type === 'work_experience') {

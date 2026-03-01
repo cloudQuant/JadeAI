@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const BG = '#111827';
 const CYAN = '#22d3ee';
@@ -20,7 +20,7 @@ function buildNeonSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<div class="rounded-lg p-4" style="border:1px solid ${CYAN}20;background-color:${CYAN}08"><p class="text-sm leading-relaxed" style="color:${TEXT}">${esc((c as SummaryContent).text)}</p></div>`;
+    return `<div class="rounded-lg p-4" style="border:1px solid ${CYAN}20;background-color:${CYAN}08">${buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed', `color:${TEXT}`)}</div>`;
   }
 
   if (section.type === 'work_experience') {

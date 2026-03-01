@@ -8,7 +8,7 @@ import type {
   LanguagesContent,
   CustomContent,
 } from '@/types/resume';
-import { esc, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
+import { esc, buildSummaryHtml, getPersonalInfo, visibleSections, type ResumeWithSections, type Section } from '../utils';
 
 const PRIMARY = '#4c1d95';
 const ACCENT = '#c084fc';
@@ -21,7 +21,7 @@ function buildWatercolorSectionContent(section: Section): string {
   const c = section.content as any;
 
   if (section.type === 'summary') {
-    return `<div class="rounded-xl p-4" style="background-color:${WASH}"><p class="text-sm leading-relaxed" style="color:${TEXT_DARK}">${esc((c as SummaryContent).text)}</p></div>`;
+    return `<div class="rounded-xl p-4" style="background-color:${WASH}">${buildSummaryHtml((c as SummaryContent).text || '', 'text-sm leading-relaxed', `color:${TEXT_DARK}`)}</div>`;
   }
 
   if (section.type === 'work_experience') {

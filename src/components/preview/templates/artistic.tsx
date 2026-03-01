@@ -13,6 +13,7 @@ import type {
   CustomContent,
 } from '@/types/resume';
 import { isSectionEmpty } from '../utils';
+import { SummaryText } from '../summary-text';
 
 const PRIMARY = '#1e1b4b';
 const ACCENT = '#f43f5e';
@@ -81,9 +82,7 @@ function ArtisticSectionContent({ section }: { section: any }) {
   if (section.type === 'summary') {
     return (
       <div className="rounded-lg p-4" style={{ border: `2px dashed ${ACCENT}30`, backgroundColor: `${PRIMARY}05` }}>
-        <p className="text-sm leading-relaxed text-zinc-600 italic">
-          {(content as SummaryContent).text}
-        </p>
+        <SummaryText text={(content as SummaryContent).text || ''} className="text-sm leading-relaxed text-zinc-600 italic" />
       </div>
     );
   }
