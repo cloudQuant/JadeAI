@@ -48,6 +48,7 @@ function buildBlocksSectionContent(section: Section): string {
   if (section.type === 'projects') {
     return `<div class="space-y-3">${((c as ProjectsContent).items || []).map((it: any) => `<div class="rounded-md border p-3" style="border-color:#e3e2de">
       <div class="flex items-baseline justify-between"><h3 class="text-sm font-semibold" style="color:${ACCENT}">${esc(it.name)}</h3>${it.startDate ? `<span class="text-xs" style="color:#9b9a97">${esc(it.startDate)}${it.endDate ? ` - ${esc(it.endDate)}` : ''}</span>` : ''}</div>
+      ${it.url ? `<p class="mt-0.5 text-xs"><span class="text-zinc-400">Website: </span><a href="${esc(it.url)}" class="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer" style="word-break:break-all">${esc(it.url)}</a></p>` : ''}
       ${it.description ? `<p class="mt-1 text-sm" style="color:#787774">${esc(it.description)}</p>` : ''}
       ${it.technologies?.length ? `<div class="mt-1.5 flex flex-wrap gap-1">${it.technologies.map((t: string) => `<span class="rounded-sm px-1.5 py-0.5 text-[10px]" style="background-color:${SUBTLE_BG};color:#787774">${esc(t)}</span>`).join('')}</div>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1 list-disc pl-4">${buildHighlights(it.highlights, 'text-sm" style="color:#787774')}</ul>` : ''}

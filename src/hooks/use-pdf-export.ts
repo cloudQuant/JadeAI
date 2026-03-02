@@ -1,15 +1,17 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useLocale } from 'next-intl';
 
 export function usePdfExport() {
   const [isExporting, setIsExporting] = useState(false);
+  const locale = useLocale();
 
   const exportPdf = useCallback(async (resumeId: string, title?: string) => {
     setIsExporting(true);
     try {
       const fingerprint = localStorage.getItem('jade_fingerprint');
-      const res = await fetch(`/api/resume/${resumeId}/export?format=pdf`, {
+      const res = await fetch(`/api/resume/${resumeId}/export?format=pdf&locale=${locale}`, {
         headers: {
           ...(fingerprint ? { 'x-fingerprint': fingerprint } : {}),
         },
@@ -35,7 +37,7 @@ export function usePdfExport() {
     } finally {
       setIsExporting(false);
     }
-  }, []);
+  }, [locale]);
 
   return { exportPdf, isExporting };
 }

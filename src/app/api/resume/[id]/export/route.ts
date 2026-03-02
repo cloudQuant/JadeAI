@@ -27,6 +27,7 @@ export async function GET(
     }
 
     const format = request.nextUrl.searchParams.get('format') || 'json';
+    const locale = request.nextUrl.searchParams.get('locale') || undefined;
     const title = resume.title || 'resume';
     const now = new Date();
     const ts = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
@@ -37,7 +38,7 @@ export async function GET(
         return NextResponse.json(resume);
       }
       case 'html': {
-        const html = generateHtml(resume);
+        const html = generateHtml(resume, false, locale);
         return new NextResponse(html, {
           status: 200,
           headers: {
@@ -47,7 +48,7 @@ export async function GET(
         });
       }
       case 'txt': {
-        const text = generatePlainText(resume);
+        const text = generatePlainText(resume, locale);
         return new NextResponse(text, {
           status: 200,
           headers: {
@@ -57,7 +58,7 @@ export async function GET(
         });
       }
       case 'docx': {
-        const doc = generateDocx(resume);
+        const doc = generateDocx(resume, locale);
         return new NextResponse(doc, {
           status: 200,
           headers: {
@@ -68,7 +69,7 @@ export async function GET(
       }
       case 'pdf': {
         const fitOnePage = request.nextUrl.searchParams.get('fitOnePage') === 'true';
-        const pdfHtml = generateHtml(resume, true);
+        const pdfHtml = generateHtml(resume, true, locale);
         const pdfBuffer = await generatePdf(pdfHtml, { fitOnePage });
         return new NextResponse(new Uint8Array(pdfBuffer), {
           status: 200,

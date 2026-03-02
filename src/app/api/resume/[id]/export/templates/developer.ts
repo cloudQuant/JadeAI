@@ -39,6 +39,7 @@ function buildDeveloperSectionContent(section: Section): string {
   if (section.type === 'projects') {
     return `<div class="space-y-4">${((c as ProjectsContent).items || []).map((it: any) => `<div>
       <div class="flex items-baseline justify-between"><div><span class="text-sm font-bold" style="color:${DARK}">${esc(it.name)}</span></div>${it.startDate ? `<span class="shrink-0 rounded px-2 py-0.5 text-[10px] font-medium" style="background:#f0f0f0;color:#636d83">${esc(it.startDate)}${it.endDate ? ` – ${esc(it.endDate)}` : ''}</span>` : ''}</div>
+      ${it.url ? `<p class="mt-0.5 text-xs"><span class="text-zinc-400">Website: </span><a href="${esc(it.url)}" class="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer" style="word-break:break-all">${esc(it.url)}</a></p>` : ''}
       ${it.description ? `<p class="mt-1 text-sm text-zinc-600">${esc(it.description)}</p>` : ''}
       ${it.technologies?.length ? `<p class="mt-0.5 text-xs" style="color:${BLUE}">Tech: ${esc(it.technologies.join(' | '))}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1 space-y-0.5">${it.highlights.filter(Boolean).map((h: string) => `<li class="flex items-start gap-2 text-sm text-zinc-600"><span class="mt-1 shrink-0 text-xs" style="color:${GREEN}">$</span>${esc(h)}</li>`).join('')}</ul>` : ''}

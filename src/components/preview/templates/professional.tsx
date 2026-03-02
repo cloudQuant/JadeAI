@@ -137,10 +137,10 @@ function ProfessionalSectionContent({ section }: { section: any }) {
   if (section.type === 'skills') {
     const categories = (content as SkillsContent).categories || [];
     return (
-      <div className="space-y-1.5">
+      <div className="space-y-1">
         {categories.map((cat: any) => (
-          <div key={cat.id} className="flex text-sm">
-            <span className="w-32 shrink-0 font-semibold" style={{ color: '#1e3a5f' }}>{cat.name}:</span>
+          <div key={cat.id} className="text-sm">
+            <span className="font-semibold" style={{ color: '#1e3a5f' }}>{cat.name}: </span>
             <span className="text-zinc-600">{cat.skills?.join(', ')}</span>
           </div>
         ))}
@@ -162,6 +162,7 @@ function ProfessionalSectionContent({ section }: { section: any }) {
                 </span>
               )}
             </div>
+            {item.url && <p className="mt-0.5 text-xs"><span className="text-zinc-400">Website: </span><a href={item.url} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">{item.url}</a></p>}
             {item.description && <p className="mt-1 text-sm text-zinc-600">{item.description}</p>}
             {item.technologies?.length > 0 && (
               <p className="mt-0.5 text-xs text-zinc-400">Tech: {item.technologies.join(', ')}</p>

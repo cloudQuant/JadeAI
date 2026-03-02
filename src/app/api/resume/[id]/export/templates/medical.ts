@@ -46,6 +46,7 @@ function buildMedicalSectionContent(section: Section): string {
   if (section.type === 'projects') {
     return `<div class="space-y-3">${((c as ProjectsContent).items || []).map((it: any) => `<div class="rounded-lg border p-3" style="border-color:${TEAL_500};background-color:${TEAL_50}">
       <div class="flex items-baseline justify-between"><span class="text-sm font-bold" style="color:${TEAL_800}">${esc(it.name)}</span>${it.startDate ? `<span class="shrink-0 text-xs font-medium" style="color:${TEAL_500}">${esc(it.startDate)}${it.endDate ? ` - ${esc(it.endDate)}` : ''}</span>` : ''}</div>
+      ${it.url ? `<p class="mt-0.5 text-xs"><span class="text-zinc-400">Website: </span><a href="${esc(it.url)}" class="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer" style="word-break:break-all">${esc(it.url)}</a></p>` : ''}
       ${it.description ? `<p class="mt-1 text-sm text-gray-600">${esc(it.description)}</p>` : ''}
       ${it.technologies?.length ? `<p class="mt-0.5 text-xs text-gray-400">Tech: ${esc(it.technologies.join(', '))}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1.5 list-disc pl-4">${it.highlights.map((h: string) => `<li class="text-sm text-gray-600">${esc(h)}</li>`).join('')}</ul>` : ''}

@@ -11,8 +11,8 @@ import type {
 } from '@/types/resume';
 import { safe, localizeSectionTitles, type ResumeWithSections } from './utils';
 
-export function generatePlainText(resume: ResumeWithSections): string {
-  const localizedResume = localizeSectionTitles(resume);
+export function generatePlainText(resume: ResumeWithSections, locale?: string): string {
+  const localizedResume = localizeSectionTitles(resume, locale);
   const lines: string[] = [];
 
   for (const section of localizedResume.sections) {

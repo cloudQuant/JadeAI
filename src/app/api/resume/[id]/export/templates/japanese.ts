@@ -55,6 +55,7 @@ function buildJapaneseSectionContent(section: Section): string {
         <h3 class="text-sm font-normal" style="color:${PRIMARY}">${esc(it.name)}</h3>
         ${it.startDate ? `<span class="shrink-0 text-[10px] font-light" style="color:${ACCENT}">${esc(it.startDate)}${it.endDate ? ` \u2013 ${esc(it.endDate)}` : ''}</span>` : ''}
       </div>
+      ${it.url ? `<p class="mt-0.5 text-xs"><span class="text-zinc-400">Website: </span><a href="${esc(it.url)}" class="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer" style="word-break:break-all">${esc(it.url)}</a></p>` : ''}
       ${it.description ? `<p class="mt-1 text-sm font-light leading-relaxed" style="color:#57534e">${esc(it.description)}</p>` : ''}
       ${it.technologies?.length ? `<p class="mt-1 text-xs font-light" style="color:${ACCENT}">${esc(it.technologies.join(' \u00b7 '))}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-2 space-y-1">${it.highlights.filter(Boolean).map((h: string) => `<li class="flex items-start gap-3 text-sm font-light" style="color:#57534e"><span class="mt-2 inline-block h-px w-3 shrink-0" style="background-color:${ACCENT}"></span>${esc(h)}</li>`).join('')}</ul>` : ''}

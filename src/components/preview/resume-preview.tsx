@@ -66,23 +66,51 @@ interface ResumePreviewProps {
 }
 
 /**
- * Returns a resume with section titles localized based on the current locale.
- * Section titles are dynamically replaced unless the user has customized them.
+ * Parse a date string ("YYYY-MM" or "YYYY-MM-DD") into a timestamp for sorting.
+ */
+function parseDateForSort(d: string | null | undefined): number {
+  if (!d) return 0;
+  const t = Date.parse(d.length <= 7 ? `${d}-01` : d);
+  return isNaN(t) ? 0 : t;
+}
+
+/**
+ * Sort items by startDate descending (most recent first), with "current" items on top.
+ */
+function sortItemsByDate<T extends { startDate?: string; current?: boolean }>(items: T[]): T[] {
+  return [...items].sort((a, b) => {
+    if (a.current && !b.current) return -1;
+    if (!a.current && b.current) return 1;
+    return parseDateForSort(b.startDate) - parseDateForSort(a.startDate);
+  });
+}
+
+/**
+ * Returns a resume with section titles localized based on the current locale,
+ * and work experience / education items sorted by date (reverse chronological).
  */
 function useLocalizedResume(resume: Resume): Resume {
   const locale = useLocale();
 
-  // Only localize if locale differs from resume language
-  if (resume.language === locale) {
-    return resume;
-  }
-
   return {
     ...resume,
-    sections: resume.sections.map((section) => ({
-      ...section,
-      title: getSectionTitle(section.type as SectionType, locale),
-    })),
+    sections: resume.sections.map((section) => {
+      const localized = {
+        ...section,
+        title: resume.language === locale
+          ? section.title
+          : getSectionTitle(section.type as SectionType, locale),
+      };
+
+      // Sort work experience and education items by date (reverse chronological)
+      if (localized.type === 'work_experience' || localized.type === 'education') {
+        const content = localized.content as any;
+        if (content?.items?.length) {
+          return { ...localized, content: { ...content, items: sortItemsByDate(content.items) } };
+        }
+      }
+      return localized;
+    }),
   };
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import {
   Dialog,
   DialogContent,
@@ -51,6 +51,7 @@ const FORMAT_OPTIONS: {
 
 export function ExportDialog({ open, onOpenChange, resumeId }: ExportDialogProps) {
   const t = useTranslations('export');
+  const locale = useLocale();
   const { currentResume, isDirty, save } = useResumeStore();
 
   const [selectedFormat, setSelectedFormat] = useState<ExportFormat>('pdf');
@@ -76,7 +77,7 @@ export function ExportDialog({ open, onOpenChange, resumeId }: ExportDialogProps
       const fingerprint = localStorage.getItem('jade_fingerprint');
       const queryFormat = selectedFormat === 'pdf-one-page' ? 'pdf' : selectedFormat;
       const fitParam = selectedFormat === 'pdf-one-page' ? '&fitOnePage=true' : '';
-      const res = await fetch(`/api/resume/${resumeId}/export?format=${queryFormat}${fitParam}`, {
+      const res = await fetch(`/api/resume/${resumeId}/export?format=${queryFormat}${fitParam}&locale=${locale}`, {
         headers: {
           ...(fingerprint ? { 'x-fingerprint': fingerprint } : {}),
         },
@@ -115,7 +116,7 @@ export function ExportDialog({ open, onOpenChange, resumeId }: ExportDialogProps
       setState('error');
       setErrorMessage(err.message || t('error'));
     }
-  }, [resumeId, selectedFormat, currentResume, isDirty, save, onOpenChange, t]);
+  }, [resumeId, selectedFormat, currentResume, isDirty, save, onOpenChange, t, locale]);
 
   const isLoading = state === 'exporting';
 

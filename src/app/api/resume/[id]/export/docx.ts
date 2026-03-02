@@ -143,8 +143,8 @@ function renderSectionHtml(section: Section): string {
   }
 }
 
-export function generateDocx(resume: ResumeWithSections): string {
-  const localizedResume = localizeSectionTitles(resume);
+export function generateDocx(resume: ResumeWithSections, locale?: string): string {
+  const localizedResume = localizeSectionTitles(resume, locale);
   const sectionsHtml = localizedResume.sections.map(renderSectionHtml).join('\n');
 
   return `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">

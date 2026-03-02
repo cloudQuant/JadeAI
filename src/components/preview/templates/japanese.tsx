@@ -146,6 +146,7 @@ function JapaneseSectionContent({ section }: { section: any }) {
                 <span className="shrink-0 text-[10px] font-light" style={{ color: ACCENT }}>{item.startDate}{item.endDate ? ` \u2013 ${item.endDate}` : ''}</span>
               )}
             </div>
+            {item.url && <p className="mt-0.5 text-xs"><span className="text-zinc-400">Website: </span><a href={item.url} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">{item.url}</a></p>}
             {item.description && <p className="mt-1 text-sm font-light leading-relaxed" style={{ color: '#57534e' }}>{item.description}</p>}
             {item.technologies?.length > 0 && (
               <p className="mt-1 text-xs font-light" style={{ color: ACCENT }}>{item.technologies.join(' \u00b7 ')}</p>

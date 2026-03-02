@@ -136,6 +136,7 @@ function CorporateSectionContent({ section }: { section: any }) {
                 <span className="shrink-0 text-xs text-slate-400">{item.startDate}{item.endDate ? ` - ${item.endDate}` : ''}</span>
               )}
             </div>
+            {item.url && <p className="mt-0.5 text-xs"><span className="text-zinc-400">Website: </span><a href={item.url} className="text-blue-500 hover:underline break-all" target="_blank" rel="noopener noreferrer">{item.url}</a></p>}
             {item.description && <p className="mt-1 text-sm text-slate-600">{item.description}</p>}
             {item.technologies?.length > 0 && (
               <p className="mt-0.5 text-xs text-slate-400">Tech: {item.technologies.join(', ')}</p>

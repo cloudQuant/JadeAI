@@ -132,9 +132,9 @@ const TEMPLATE_BUILDERS: Record<string, (r: ResumeWithSections) => string> = {
   mosaic: buildMosaicHtml,
 };
 
-export function generateHtml(resume: ResumeWithSections, forPdf = false): string {
+export function generateHtml(resume: ResumeWithSections, forPdf = false, locale?: string): string {
   // Localize section titles before building HTML
-  const localizedResume = localizeSectionTitles(resume);
+  const localizedResume = localizeSectionTitles(resume, locale);
   const builder = TEMPLATE_BUILDERS[localizedResume.template] || buildClassicHtml;
   const bodyHtml = builder(localizedResume);
   const theme = { ...DEFAULT_THEME, ...((localizedResume as any).themeConfig || {}) };

@@ -37,20 +37,44 @@ export function isSectionEmpty(section: Section): boolean {
   return false;
 }
 
-// ─── Section title localization ──────────────────────────────
+// ─── Sort items by date (reverse chronological) ─────────────
 
-export function localizeSectionTitles(resume: ResumeWithSections): ResumeWithSections {
-  const locale = resume.language || 'zh';
+function parseDate(d: string | null | undefined): number {
+  if (!d) return 0;
+  // Handles "YYYY-MM", "YYYY-MM-DD", etc.
+  const t = Date.parse(d.length <= 7 ? `${d}-01` : d);
+  return isNaN(t) ? 0 : t;
+}
+
+function sortItemsByDate<T extends { startDate?: string; current?: boolean }>(items: T[]): T[] {
+  return [...items].sort((a, b) => {
+    // Current (ongoing) items first
+    if (a.current && !b.current) return -1;
+    if (!a.current && b.current) return 1;
+    // Then by startDate descending (most recent first)
+    return parseDate(b.startDate) - parseDate(a.startDate);
+  });
+}
+
+// ─── Section title localization & data preparation ───────────
+
+export function localizeSectionTitles(resume: ResumeWithSections, localeOverride?: string): ResumeWithSections {
+  const locale = localeOverride || resume.language || 'zh';
   return {
     ...resume,
     sections: resume.sections.map((section: ResumeWithSections['sections'][number]) => {
-      if (section.type === 'custom') {
-        return section;
+      const localized = section.type === 'custom'
+        ? section
+        : { ...section, title: getSectionTitle(section.type as SectionType, locale) };
+
+      // Sort work experience and education items by date (reverse chronological)
+      if (localized.type === 'work_experience' || localized.type === 'education') {
+        const content = localized.content as any;
+        if (content?.items?.length) {
+          return { ...localized, content: { ...content, items: sortItemsByDate(content.items) } };
+        }
       }
-      return {
-        ...section,
-        title: getSectionTitle(section.type as SectionType, locale),
-      };
+      return localized;
     }),
   };
 }
@@ -132,7 +156,7 @@ export function buildExportThemeCSS(theme: typeof DEFAULT_THEME, template: strin
   const primaryIsDark = isDark(theme.primaryColor);
   return `
     ${sel} > div {
-      font-family: ${theme.fontFamily}, sans-serif !important;
+      font-family: ${theme.fontFamily}, 'Noto Sans SC', sans-serif !important;
       line-height: ${theme.lineSpacing} !important;
       ${needsPadding ? `padding: ${m.top}px ${m.right}px ${m.bottom}px ${m.left}px !important;` : ''}
       --base-body-size: ${fs.body};
