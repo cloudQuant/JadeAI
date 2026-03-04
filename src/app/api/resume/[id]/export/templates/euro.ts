@@ -15,7 +15,7 @@ function buildEuroSectionContent(s: Section): string {
   if (s.type === 'work_experience') {
     return `<div class="space-y-3">${(c.items || []).map((it: any) => `<div>
       <div class="flex items-baseline justify-between">
-        <div><span class="text-sm font-bold text-zinc-800">${esc(it.position)}</span>${it.company ? `<span class="text-sm text-zinc-500"> — ${esc(it.company)}</span>` : ''}</div>
+        <div><span class="text-sm font-bold text-zinc-800">${esc(it.position)}</span>${it.company ? `<span class="text-sm text-zinc-500">, ${esc(it.company)}</span>` : ''}</div>
         <span class="shrink-0 text-xs text-zinc-400">${esc(it.startDate)} – ${it.current ? 'Present' : esc(it.endDate || '')}</span>
       </div>
       ${it.description ? `<p class="mt-1 text-sm text-zinc-600">${esc(it.description)}</p>` : ''}
@@ -26,7 +26,7 @@ function buildEuroSectionContent(s: Section): string {
   if (s.type === 'education') {
     return `<div class="space-y-3">${(c.items || []).map((it: any) => `<div>
       <div class="flex items-baseline justify-between">
-        <div><span class="text-sm font-bold text-zinc-800">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</span>${it.institution ? `<span class="text-sm text-zinc-500"> — ${esc(it.institution)}</span>` : ''}</div>
+        <div><span class="text-sm font-bold text-zinc-800">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</span>${it.institution ? `<span class="text-sm text-zinc-500"> — ${esc(it.institution)}</span>` : ''}</div>
         <span class="shrink-0 text-xs text-zinc-400">${esc(it.startDate)} – ${esc(it.endDate || '')}</span>
       </div>
       ${it.gpa ? `<p class="text-sm text-zinc-500">GPA: ${esc(it.gpa)}</p>` : ''}

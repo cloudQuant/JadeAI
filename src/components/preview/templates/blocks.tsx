@@ -120,7 +120,7 @@ function BlocksSectionContent({ section }: { section: any }) {
               <h3 className="text-sm font-semibold" style={{ color: PRIMARY }}>{item.institution}</h3>
               <span className="text-xs" style={{ color: '#9b9a97' }}>{item.startDate} - {item.endDate}</span>
             </div>
-            <p className="text-sm" style={{ color: '#787774' }}>{item.degree}{item.field ? ` in ${item.field}` : ''}{item.location ? ` , ${item.location}` : ''}</p>
+            <p className="text-sm" style={{ color: '#787774' }}>{item.degree}{item.field ? `, ${item.field}` : ''}{item.location ? ` , ${item.location}` : ''}</p>
             {item.gpa && <p className="text-xs" style={{ color: '#9b9a97' }}>GPA: {item.gpa}</p>}
             {item.highlights?.length > 0 && (
               <ul className="mt-1 list-disc pl-4">

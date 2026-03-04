@@ -104,7 +104,7 @@ function SwissSectionContent({ section }: { section: any }) {
           <div key={item.id} className="grid grid-cols-[140px_1fr] gap-4">
             <span className="text-xs" style={{ color: '#71717a' }}>{item.startDate} &ndash; {item.endDate}</span>
             <div>
-              <h3 className="text-sm font-bold" style={{ color: TEXT }}>{item.degree}{item.field ? ` in ${item.field}` : ''}</h3>
+              <h3 className="text-sm font-bold" style={{ color: TEXT }}>{item.degree}{item.field ? `, ${item.field}` : ''}</h3>
               {item.institution && <p className="text-sm" style={{ color: RED }}>{item.institution}</p>}
               {item.gpa && <p className="text-xs" style={{ color: '#71717a' }}>GPA: {item.gpa}</p>}
               {item.highlights?.length > 0 && (

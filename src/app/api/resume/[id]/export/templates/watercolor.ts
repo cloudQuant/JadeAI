@@ -36,7 +36,7 @@ function buildWatercolorSectionContent(section: Section): string {
   if (section.type === 'education') {
     return `<div class="space-y-3">${((c as EducationContent).items || []).map((it: any) => `<div class="rounded-xl p-4" style="background-color:${WASH}">
       <div class="flex items-baseline justify-between"><h3 class="text-sm font-bold" style="color:${PRIMARY}">${esc(it.institution)}</h3><span class="text-xs" style="color:${TEXT}">${esc(it.startDate)} - ${esc(it.endDate)}</span></div>
-      <p class="text-sm" style="color:${TEXT_DARK}">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</p>
+      <p class="text-sm" style="color:${TEXT_DARK}">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</p>
       ${it.gpa ? `<p class="text-xs" style="color:${ACCENT}">GPA: ${esc(it.gpa)}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1 space-y-0.5">${it.highlights.filter(Boolean).map((h: string) => `<li class="flex items-start gap-2 text-sm" style="color:${TEXT}"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style="background-color:${ACCENT}"></span>${esc(h)}</li>`).join('')}</ul>` : ''}
     </div>`).join('')}</div>`;

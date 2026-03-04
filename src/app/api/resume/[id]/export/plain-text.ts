@@ -43,7 +43,7 @@ export function generatePlainText(resume: ResumeWithSections, locale?: string): 
         const work = section.content as WorkExperienceContent;
         lines.push(`== ${section.title} ==`);
         for (const item of work.items || []) {
-          lines.push(`- ${safe(item.position)} at ${safe(item.company)}`);
+          lines.push(`- ${safe(item.position)}, ${safe(item.company)}`);
           const dateRange = item.current ? `${safe(item.startDate)} - Present` : `${safe(item.startDate)} - ${safe(item.endDate)}`;
           lines.push(`  ${dateRange}${item.location ? ` | ${item.location}` : ''}`);
           if (item.description) lines.push(`  ${item.description}`);
@@ -58,7 +58,7 @@ export function generatePlainText(resume: ResumeWithSections, locale?: string): 
         const edu = section.content as EducationContent;
         lines.push(`== ${section.title} ==`);
         for (const item of edu.items || []) {
-          lines.push(`- ${safe(item.degree)} in ${safe(item.field)}, ${safe(item.institution)}`);
+          lines.push(`- ${safe(item.degree)}${item.field ? `, ${safe(item.field)}` : ''}, ${safe(item.institution)}`);
           lines.push(`  ${safe(item.startDate)} - ${safe(item.endDate)}${item.location ? ` | ${item.location}` : ''}`);
           if (item.gpa) lines.push(`  GPA: ${item.gpa}`);
           for (const h of item.highlights || []) {

@@ -28,7 +28,7 @@ function buildCreativeSectionContent(section: Section): string {
   if (section.type === 'education') {
     return `<div class="space-y-3">${((c as EducationContent).items || []).map((it: any) => `<div class="rounded-lg border border-zinc-100 p-4">
       <div class="flex items-baseline justify-between"><h3 class="text-sm font-bold text-zinc-800">${esc(it.institution)}</h3><span class="text-xs text-zinc-400">${esc(it.startDate)} – ${esc(it.endDate)}</span></div>
-      <p class="text-sm text-zinc-600">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}${it.location ? `<span class="text-zinc-400">, ${esc(it.location)}</span>` : ''}</p>
+      <p class="text-sm text-zinc-600">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}${it.location ? `<span class="text-zinc-400">, ${esc(it.location)}</span>` : ''}</p>
       ${it.gpa ? `<p class="text-xs text-zinc-500">GPA: ${esc(it.gpa)}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1 space-y-0.5">${buildHighlights(it.highlights, '', 'custom-dot')}</ul>` : ''}
     </div>`).join('')}</div>`;

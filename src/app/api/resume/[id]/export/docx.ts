@@ -11,136 +11,148 @@ import type {
 } from '@/types/resume';
 import { esc, safe, localizeSectionTitles, type ResumeWithSections, type Section } from './utils';
 
+/* ---------- Word-compatible helpers ---------- */
+
+/** Build a two-column table row: left content + right-aligned date */
+function headerRow(left: string, right: string): string {
+  return `<table border="0" cellspacing="0" cellpadding="0" width="100%" style="border-collapse:collapse;">
+<tr><td style="padding:0;"><b>${left}</b></td>
+<td align="right" style="padding:0;white-space:nowrap;color:#666;font-size:10pt;">${right}</td></tr></table>`;
+}
+
 function renderSectionHtml(section: Section): string {
   if (!section.visible) return '';
 
   switch (section.type) {
     case 'personal_info': {
       const info = section.content as PersonalInfoContent;
-      let html = '<div class="personal-info">';
-      if (info.fullName) html += `<h1>${esc(info.fullName)}</h1>`;
-      if (info.jobTitle) html += `<p class="job-title">${esc(info.jobTitle)}</p>`;
+      let html = '<div style="text-align:center;border-bottom:2pt solid #2563eb;padding-bottom:8pt;margin-bottom:12pt;">';
+      if (info.fullName) html += `<p style="font-size:22pt;font-weight:bold;color:#1a1a1a;margin:0 0 2pt 0;">${esc(info.fullName)}</p>`;
+      if (info.jobTitle) html += `<p style="font-size:11pt;color:#555;margin:0 0 4pt 0;">${esc(info.jobTitle)}</p>`;
       const contactParts: string[] = [];
       if (info.email) contactParts.push(esc(info.email));
       if (info.phone) contactParts.push(esc(info.phone));
       if (info.location) contactParts.push(esc(info.location));
-      if (contactParts.length) html += `<p class="contact">${contactParts.join(' &bull; ')}</p>`;
-      if (info.website) html += `<p class="links"><a href="${esc(info.website)}">${esc(info.website)}</a></p>`;
+      if (info.website) contactParts.push(esc(info.website));
+      if (contactParts.length) html += `<p style="font-size:9pt;color:#666;margin:0;">${contactParts.join(' | ')}</p>`;
+      const linkParts: string[] = [];
+      if (info.linkedin) linkParts.push(`<a href="${esc(info.linkedin)}" style="color:#2563eb;">${esc(info.linkedin)}</a>`);
+      if (info.github) linkParts.push(`<a href="${esc(info.github)}" style="color:#2563eb;">${esc(info.github)}</a>`);
+      if (linkParts.length) html += `<p style="font-size:9pt;margin:2pt 0 0 0;">${linkParts.join(' | ')}</p>`;
       html += '</div>';
       return html;
     }
     case 'summary': {
       const summary = section.content as SummaryContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
-      if (summary.text) html += `<p>${esc(summary.text)}</p>`;
-      html += '</div>';
+      let html = sectionHeading(section.title);
+      if (summary.text) {
+        const cleaned = summary.text.replace(/<div>/g, '<br>').replace(/<\/div>/g, '');
+        html += `<p style="font-size:10pt;line-height:150%;margin:0 0 4pt 0;">${cleaned}</p>`;
+      }
       return html;
     }
     case 'work_experience': {
       const work = section.content as WorkExperienceContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
+      let html = sectionHeading(section.title);
       for (const item of work.items || []) {
-        html += '<div class="item">';
-        html += `<div class="item-header"><strong>${esc(item.position)}</strong> at ${esc(item.company)}`;
         const dateRange = item.current ? `${safe(item.startDate)} - Present` : `${safe(item.startDate)} - ${safe(item.endDate)}`;
-        html += `<span class="date">${esc(dateRange)}</span></div>`;
-        if (item.location) html += `<div class="location">${esc(item.location)}</div>`;
-        if (item.description) html += `<p>${esc(item.description)}</p>`;
+        const leftParts = [esc(item.position)];
+        if (item.company) leftParts[0] += `<span style="font-weight:normal;">, ${esc(item.company)}</span>`;
+        html += headerRow(leftParts[0], esc(dateRange));
+        if (item.location) html += `<p style="font-size:9pt;color:#888;margin:0 0 2pt 0;">${esc(item.location)}</p>`;
+        if (item.description) html += `<p style="font-size:10pt;margin:2pt 0;">${esc(item.description)}</p>`;
         if (item.highlights?.length) {
-          html += '<ul>';
-          for (const h of item.highlights) if (h) html += `<li>${esc(h)}</li>`;
+          html += '<ul style="margin:2pt 0 8pt 18pt;padding:0;">';
+          for (const h of item.highlights) if (h) html += `<li style="font-size:10pt;margin-bottom:1pt;">${esc(h)}</li>`;
           html += '</ul>';
+        } else {
+          html += '<p style="margin:0 0 6pt 0;">&nbsp;</p>';
         }
-        html += '</div>';
       }
-      html += '</div>';
       return html;
     }
     case 'education': {
       const edu = section.content as EducationContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
+      let html = sectionHeading(section.title);
       for (const item of edu.items || []) {
-        html += '<div class="item">';
-        html += `<div class="item-header"><strong>${esc(item.degree)}</strong> in ${esc(item.field)}, ${esc(item.institution)}`;
-        html += `<span class="date">${esc(item.startDate)} - ${esc(item.endDate)}</span></div>`;
-        if (item.location) html += `<div class="location">${esc(item.location)}</div>`;
-        if (item.gpa) html += `<p>GPA: ${esc(item.gpa)}</p>`;
+        const left = `${esc(item.degree)}${item.field ? `, ${esc(item.field)}` : ''}<span style="font-weight:normal;">, ${esc(item.institution)}</span>`;
+        html += headerRow(left, `${esc(item.startDate)} - ${esc(item.endDate)}`);
+        if (item.location) html += `<p style="font-size:9pt;color:#888;margin:0 0 2pt 0;">${esc(item.location)}</p>`;
+        if (item.gpa) html += `<p style="font-size:10pt;margin:0 0 2pt 0;">GPA: ${esc(item.gpa)}</p>`;
         if (item.highlights?.length) {
-          html += '<ul>';
-          for (const h of item.highlights) if (h) html += `<li>${esc(h)}</li>`;
+          html += '<ul style="margin:2pt 0 8pt 18pt;padding:0;">';
+          for (const h of item.highlights) if (h) html += `<li style="font-size:10pt;margin-bottom:1pt;">${esc(h)}</li>`;
           html += '</ul>';
+        } else {
+          html += '<p style="margin:0 0 6pt 0;">&nbsp;</p>';
         }
-        html += '</div>';
       }
-      html += '</div>';
       return html;
     }
     case 'skills': {
       const skills = section.content as SkillsContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
+      let html = sectionHeading(section.title);
+      html += '<table border="0" cellspacing="0" cellpadding="2" style="border-collapse:collapse;">';
       for (const cat of skills.categories || []) {
-        html += `<p><strong>${esc(cat.name)}:</strong> ${esc((cat.skills || []).join(', '))}</p>`;
+        html += `<tr><td valign="top" style="font-size:10pt;font-weight:bold;padding-right:6pt;white-space:nowrap;">${esc(cat.name)}:</td>`;
+        html += `<td style="font-size:10pt;">${esc((cat.skills || []).join(', '))}</td></tr>`;
       }
-      html += '</div>';
+      html += '</table>';
       return html;
     }
     case 'projects': {
       const projects = section.content as ProjectsContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
+      let html = sectionHeading(section.title);
       for (const item of projects.items || []) {
-        html += '<div class="item">';
-        html += `<div class="item-header"><strong>${esc(item.name)}</strong>`;
-        if (item.url) html += ` <a href="${esc(item.url)}">${esc(item.url)}</a>`;
-        if (item.startDate) {
-          html += `<span class="date">${esc(item.startDate)}${item.endDate ? ` - ${esc(item.endDate)}` : ''}</span>`;
-        }
-        html += '</div>';
-        if (item.description) html += `<p>${esc(item.description)}</p>`;
-        if (item.technologies?.length) html += `<p class="tech">Technologies: ${esc(item.technologies.join(', '))}</p>`;
+        const dateStr = item.startDate ? `${esc(item.startDate)}${item.endDate ? ` - ${esc(item.endDate)}` : ''}` : '';
+        html += headerRow(esc(item.name), dateStr);
+        if (item.url) html += `<p style="font-size:9pt;margin:0 0 2pt 0;"><span style="color:#888;">Website: </span><a href="${esc(item.url)}" style="color:#2563eb;">${esc(item.url)}</a></p>`;
+        if (item.description) html += `<p style="font-size:10pt;margin:0 0 2pt 0;">${esc(item.description)}</p>`;
+        if (item.technologies?.length) html += `<p style="font-size:9pt;color:#555;margin:0 0 2pt 0;">Tech: ${esc(item.technologies.join(', '))}</p>`;
         if (item.highlights?.length) {
-          html += '<ul>';
-          for (const h of item.highlights) if (h) html += `<li>${esc(h)}</li>`;
+          html += '<ul style="margin:2pt 0 8pt 18pt;padding:0;">';
+          for (const h of item.highlights) if (h) html += `<li style="font-size:10pt;margin-bottom:1pt;">${esc(h)}</li>`;
           html += '</ul>';
+        } else {
+          html += '<p style="margin:0 0 6pt 0;">&nbsp;</p>';
         }
-        html += '</div>';
       }
-      html += '</div>';
       return html;
     }
     case 'certifications': {
       const certs = section.content as CertificationsContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
+      let html = sectionHeading(section.title);
       for (const item of certs.items || []) {
-        html += `<p><strong>${esc(item.name)}</strong> - ${esc(item.issuer)} (${esc(item.date)})</p>`;
+        const parts = [`<b>${esc(item.name)}</b>`];
+        if (item.issuer) parts.push(esc(item.issuer));
+        if (item.date) parts.push(`(${esc(item.date)})`);
+        html += `<p style="font-size:10pt;margin:0 0 2pt 0;">${parts.join(' — ')}</p>`;
       }
-      html += '</div>';
       return html;
     }
     case 'languages': {
       const langs = section.content as LanguagesContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
+      let html = sectionHeading(section.title);
       for (const item of langs.items || []) {
-        html += `<p>${esc(item.language)}: ${esc(item.proficiency)}</p>`;
+        html += `<p style="font-size:10pt;margin:0 0 2pt 0;">${esc(item.language)}: ${esc(item.proficiency)}</p>`;
       }
-      html += '</div>';
       return html;
     }
     default: {
       const custom = section.content as CustomContent;
-      let html = `<div class="section"><h2>${esc(section.title)}</h2>`;
+      let html = sectionHeading(section.title);
       for (const item of (custom as any).items || []) {
-        html += '<div class="item">';
-        html += `<div class="item-header"><strong>${esc(item.title)}</strong>`;
-        if (item.subtitle) html += ` - ${esc(item.subtitle)}`;
-        if (item.date) html += `<span class="date">${esc(item.date)}</span>`;
-        html += '</div>';
-        if (item.description) html += `<p>${esc(item.description)}</p>`;
-        html += '</div>';
+        const left = `${esc(item.title)}${item.subtitle ? ` - ${esc(item.subtitle)}` : ''}`;
+        html += headerRow(left, item.date ? esc(item.date) : '');
+        if (item.description) html += `<p style="font-size:10pt;margin:2pt 0 6pt 0;">${esc(item.description)}</p>`;
       }
-      html += '</div>';
       return html;
     }
   }
+}
+
+function sectionHeading(title: string): string {
+  return `<p style="font-size:13pt;font-weight:bold;color:#1a1a1a;border-bottom:1pt solid #cccccc;padding-bottom:2pt;margin:12pt 0 6pt 0;">${esc(title)}</p>`;
 }
 
 export function generateDocx(resume: ResumeWithSections, locale?: string): string {
@@ -153,25 +165,24 @@ export function generateDocx(resume: ResumeWithSections, locale?: string): strin
   <meta name="ProgId" content="Word.Document">
   <meta name="Generator" content="JadeAI">
   <!--[if gte mso 9]>
-  <xml><w:WordDocument><w:View>Print</w:View></w:WordDocument></xml>
+  <xml>
+    <w:WordDocument>
+      <w:View>Print</w:View>
+      <w:Zoom>100</w:Zoom>
+      <w:DoNotOptimizeForBrowser/>
+    </w:WordDocument>
+  </xml>
   <![endif]-->
   <style>
-    body { font-family: 'Segoe UI', Calibri, Arial, sans-serif; color: #333; line-height: 1.6; }
-    .personal-info { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #2563eb; padding-bottom: 12px; }
-    .personal-info h1 { font-size: 24pt; color: #1a1a1a; margin-bottom: 2px; }
-    .job-title { font-size: 12pt; color: #555; margin-bottom: 6px; }
-    .contact { font-size: 10pt; color: #666; }
-    .links { font-size: 10pt; margin-top: 4px; }
-    .links a { color: #2563eb; }
-    .section { margin-bottom: 16px; }
-    .section h2 { font-size: 14pt; color: #1a1a1a; border-bottom: 1px solid #ddd; padding-bottom: 4px; margin-bottom: 10px; }
-    .item { margin-bottom: 10px; }
-    .item-header { margin-bottom: 2px; }
-    .date { color: #666; font-size: 10pt; }
-    .location { color: #888; font-size: 10pt; }
-    ul { margin-left: 18px; margin-top: 4px; }
-    li { margin-bottom: 2px; font-size: 10pt; }
-    p { font-size: 10pt; margin-top: 4px; }
+    @page { size: A4; margin: 54pt 54pt 54pt 54pt; }
+    body {
+      font-family: Calibri, 'Microsoft YaHei', 'PingFang SC', Arial, sans-serif;
+      font-size: 10pt;
+      color: #333;
+      line-height: 150%;
+    }
+    table { font-size: 10pt; }
+    a { color: #2563eb; text-decoration: none; }
   </style>
 </head>
 <body>

@@ -68,6 +68,9 @@ export function WorkExperienceSection({ section, onUpdate }: Props) {
               <EditableText label={t('position')} value={item.position} onChange={(v) => updateItem(index, { position: v })} />
             </FieldWrapper>
             <FieldWrapper>
+              <EditableText label={t('location')} value={item.location || ''} onChange={(v) => updateItem(index, { location: v })} />
+            </FieldWrapper>
+            <FieldWrapper>
               <EditableDate label={t('startDate')} value={item.startDate} onChange={(v) => updateItem(index, { startDate: v })} />
               <EditableDate label={t('endDate')} value={item.endDate || ''} onChange={(v) => updateItem(index, { endDate: v || null })} />
             </FieldWrapper>

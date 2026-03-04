@@ -77,7 +77,7 @@ function TeacherSectionContent({ section }: { section: any }) {
             <div className="flex items-baseline justify-between">
               <div>
                 <span className="text-sm font-bold" style={{ color: PRIMARY }}>{item.position}</span>
-                {item.company && <span className="text-sm" style={{ color: ACCENT }}> at {item.company}</span>}
+                {item.company && <span className="text-sm" style={{ color: ACCENT }}>, {item.company}</span>}
               </div>
               <span className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium" style={{ backgroundColor: '#fed7aa', color: PRIMARY }}>
                 {item.startDate} - {item.current ? 'Present' : item.endDate}
@@ -108,7 +108,7 @@ function TeacherSectionContent({ section }: { section: any }) {
             <div className="flex items-baseline justify-between">
               <div>
                 <span className="text-sm font-bold" style={{ color: PRIMARY }}>
-                  {item.degree}{item.field ? ` in ${item.field}` : ''}
+                  {item.degree}{item.field ? `, ${item.field}` : ''}
                 </span>
                 {item.institution && <span className="text-sm" style={{ color: MUTED }}> — {item.institution}</span>}
               </div>

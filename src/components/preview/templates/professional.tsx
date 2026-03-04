@@ -87,7 +87,7 @@ function ProfessionalSectionContent({ section }: { section: any }) {
             <div className="flex items-baseline justify-between">
               <div>
                 <span className="text-sm font-bold" style={{ color: '#1e3a5f' }}>{item.position}</span>
-                {item.company && <span className="text-sm text-zinc-600"> — {item.company}</span>}
+                {item.company && <span className="text-sm text-zinc-600">, {item.company}</span>}
                 {item.location && <span className="text-sm text-zinc-400"> ({item.location})</span>}
               </div>
               <span className="shrink-0 text-xs text-zinc-400 italic">{item.startDate} – {item.current ? 'Present' : item.endDate}</span>
@@ -119,7 +119,7 @@ function ProfessionalSectionContent({ section }: { section: any }) {
               </div>
               <span className="shrink-0 text-xs text-zinc-400 italic">{item.startDate} – {item.endDate}</span>
             </div>
-            <p className="text-sm text-zinc-600">{item.degree}{item.field ? ` in ${item.field}` : ''}</p>
+            <p className="text-sm text-zinc-600">{item.degree}{item.field ? `, ${item.field}` : ''}</p>
             {item.gpa && <p className="text-xs text-zinc-500">GPA: {item.gpa}</p>}
             {item.highlights?.length > 0 && (
               <ul className="mt-1 list-disc pl-5">

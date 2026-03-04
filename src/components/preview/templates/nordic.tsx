@@ -87,7 +87,7 @@ function NordicSectionContent({ section }: { section: any }) {
           <div key={item.id} className="rounded-sm p-3" style={{ backgroundColor: SLATE_50 }}>
             <div className="flex items-baseline justify-between">
               <div>
-                <span className="text-sm font-medium" style={{ color: SLATE_500 }}>{item.degree}{item.field ? ` in ${item.field}` : ''}</span>
+                <span className="text-sm font-medium" style={{ color: SLATE_500 }}>{item.degree}{item.field ? `, ${item.field}` : ''}</span>
                 {item.institution && <span className="text-sm font-light" style={{ color: SLATE_400 }}> - {item.institution}</span>}
               </div>
               <span className="shrink-0 text-xs font-light" style={{ color: SLATE_400 }}>{item.startDate} - {item.endDate}</span>

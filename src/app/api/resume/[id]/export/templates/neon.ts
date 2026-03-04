@@ -35,7 +35,7 @@ function buildNeonSectionContent(section: Section): string {
   if (section.type === 'education') {
     return `<div class="space-y-3">${((c as EducationContent).items || []).map((it: any) => `<div class="rounded-lg p-4" style="border:1px solid ${VIOLET}20;background-color:${VIOLET}05">
       <div class="flex items-baseline justify-between"><h3 class="text-sm font-bold" style="color:${CYAN}">${esc(it.institution)}</h3><span class="text-xs" style="color:${TEXT_DIM}">${esc(it.startDate)} - ${esc(it.endDate)}</span></div>
-      <p class="text-sm" style="color:${TEXT}">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</p>
+      <p class="text-sm" style="color:${TEXT}">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</p>
       ${it.gpa ? `<p class="text-xs" style="color:${VIOLET}">GPA: ${esc(it.gpa)}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1 space-y-0.5">${it.highlights.filter(Boolean).map((h: string) => `<li class="flex items-start gap-2 text-sm" style="color:${TEXT}"><span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style="background-color:${VIOLET};box-shadow:0 0 6px ${VIOLET}"></span>${esc(h)}</li>`).join('')}</ul>` : ''}
     </div>`).join('')}</div>`;

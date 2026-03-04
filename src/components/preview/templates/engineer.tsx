@@ -121,7 +121,7 @@ function EngineerSectionContent({ section }: { section: any }) {
             <div className="flex items-baseline justify-between">
               <div>
                 <span className="text-sm font-bold" style={{ color: PRIMARY }}>
-                  {item.degree}{item.field ? ` in ${item.field}` : ''}
+                  {item.degree}{item.field ? `, ${item.field}` : ''}
                 </span>
                 {item.institution && <span className="text-sm" style={{ color: SECONDARY }}> — {item.institution}</span>}
               </div>

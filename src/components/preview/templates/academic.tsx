@@ -102,7 +102,7 @@ function AcademicSectionContent({ section }: { section: any }) {
             <div className="flex items-baseline justify-between">
               <div>
                 <span className="text-sm font-bold text-zinc-800">{item.degree}</span>
-                {item.field && <span className="text-sm text-zinc-600"> in {item.field}</span>}
+                {item.field && <span className="text-sm text-zinc-600">, {item.field}</span>}
               </div>
               <span className="shrink-0 text-xs text-zinc-500">{item.startDate} – {item.endDate}</span>
             </div>

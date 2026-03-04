@@ -65,7 +65,7 @@ function EuroSectionContent({ section }: { section: any }) {
             <div className="flex items-baseline justify-between">
               <div>
                 <span className="text-sm font-bold text-zinc-800">{item.position}</span>
-                {item.company && <span className="text-sm text-zinc-500"> — {item.company}</span>}
+                {item.company && <span className="text-sm text-zinc-500">, {item.company}</span>}
               </div>
               <span className="shrink-0 text-xs text-zinc-400">{item.startDate} – {item.current ? 'Present' : item.endDate}</span>
             </div>
@@ -88,7 +88,7 @@ function EuroSectionContent({ section }: { section: any }) {
           <div key={item.id}>
             <div className="flex items-baseline justify-between">
               <div>
-                <span className="text-sm font-bold text-zinc-800">{item.degree}{item.field ? ` in ${item.field}` : ''}</span>
+                <span className="text-sm font-bold text-zinc-800">{item.degree}{item.field ? `, ${item.field}` : ''}</span>
                 {item.institution && <span className="text-sm text-zinc-500"> — {item.institution}</span>}
               </div>
               <span className="shrink-0 text-xs text-zinc-400">{item.startDate} – {item.endDate}</span>

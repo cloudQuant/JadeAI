@@ -34,7 +34,7 @@ function buildJapaneseSectionContent(section: Section): string {
   if (section.type === 'education') {
     return `<div class="space-y-5">${((c as EducationContent).items || []).map((it: any) => `<div>
       <div class="flex items-baseline justify-between">
-        <h3 class="text-sm font-normal" style="color:${PRIMARY}">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</h3>
+        <h3 class="text-sm font-normal" style="color:${PRIMARY}">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</h3>
         <span class="shrink-0 text-[10px] font-light" style="color:${ACCENT}">${esc(it.startDate)} &ndash; ${esc(it.endDate)}</span>
       </div>
       ${it.institution ? `<p class="mt-0.5 text-xs font-light" style="color:${ACCENT}">${esc(it.institution)}${it.location ? `, ${esc(it.location)}` : ''}</p>` : ''}

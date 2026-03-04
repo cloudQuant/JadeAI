@@ -93,7 +93,7 @@ function FinanceSectionContent({ section }: { section: any }) {
           <div key={item.id}>
             <div className="flex items-baseline justify-between">
               <div>
-                <span className="text-sm font-bold" style={{ color: SLATE_800 }}>{item.degree}{item.field ? ` in ${item.field}` : ''}</span>
+                <span className="text-sm font-bold" style={{ color: SLATE_800 }}>{item.degree}{item.field ? `, ${item.field}` : ''}</span>
                 {item.institution && <span className="text-sm text-slate-600"> - {item.institution}</span>}
               </div>
               <span className="shrink-0 text-xs italic text-slate-400">{item.startDate} - {item.endDate}</span>

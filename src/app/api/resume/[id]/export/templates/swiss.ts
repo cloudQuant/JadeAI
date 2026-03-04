@@ -34,7 +34,7 @@ function buildSwissSectionContent(section: Section): string {
     return `<div class="space-y-3">${((c as EducationContent).items || []).map((it: any) => `<div class="grid grid-cols-[140px_1fr] gap-4">
       <span class="text-xs" style="color:#71717a">${esc(it.startDate)} &ndash; ${esc(it.endDate)}</span>
       <div>
-        <h3 class="text-sm font-bold" style="color:${TEXT}">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</h3>
+        <h3 class="text-sm font-bold" style="color:${TEXT}">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</h3>
         ${it.institution ? `<p class="text-sm" style="color:${RED}">${esc(it.institution)}</p>` : ''}
         ${it.gpa ? `<p class="text-xs" style="color:#71717a">GPA: ${esc(it.gpa)}</p>` : ''}
         ${it.highlights?.length ? `<ul class="mt-1 list-none space-y-0.5">${it.highlights.filter(Boolean).map((h: string) => `<li class="flex items-start gap-2 text-sm" style="color:#3f3f46"><span class="mt-1.5 inline-block h-1 w-1 shrink-0" style="background-color:${RED}"></span>${esc(h)}</li>`).join('')}</ul>` : ''}

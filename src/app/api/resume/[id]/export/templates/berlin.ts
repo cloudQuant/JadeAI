@@ -31,7 +31,7 @@ function buildBerlinSectionContent(section: Section): string {
 
   if (section.type === 'education') {
     return `<div class="space-y-3">${((c as EducationContent).items || []).map((it: any) => `<div class="border-l-4 pl-4" style="border-color:${BLUE}">
-      <div class="flex items-baseline justify-between"><h3 class="text-sm font-bold" style="color:${TEXT}">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</h3><span class="shrink-0 text-xs" style="color:${BLUE}">${esc(it.startDate)} &ndash; ${esc(it.endDate)}</span></div>
+      <div class="flex items-baseline justify-between"><h3 class="text-sm font-bold" style="color:${TEXT}">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</h3><span class="shrink-0 text-xs" style="color:${BLUE}">${esc(it.startDate)} &ndash; ${esc(it.endDate)}</span></div>
       ${it.institution ? `<p class="text-sm font-semibold" style="color:${YELLOW}">${esc(it.institution)}${it.location ? `, ${esc(it.location)}` : ''}</p>` : ''}
       ${it.gpa ? `<p class="text-xs text-zinc-500">GPA: ${esc(it.gpa)}</p>` : ''}
       ${it.highlights?.length ? `<ul class="mt-1 space-y-0.5">${it.highlights.filter(Boolean).map((h: string) => `<li class="flex items-start gap-2 text-sm text-zinc-600"><span class="mt-1.5 h-1.5 w-1.5 shrink-0" style="background-color:${RED_B}"></span>${esc(h)}</li>`).join('')}</ul>` : ''}

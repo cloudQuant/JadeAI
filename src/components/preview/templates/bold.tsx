@@ -97,7 +97,7 @@ function BoldSectionContent({ section }: { section: any }) {
           <div key={item.id}>
             <div className="flex items-baseline justify-between">
               <div>
-                <span className="text-base font-bold text-black">{item.degree}{item.field ? ` in ${item.field}` : ''}</span>
+                <span className="text-base font-bold text-black">{item.degree}{item.field ? `, ${item.field}` : ''}</span>
                 {item.institution && <span className="text-sm text-zinc-500"> — {item.institution}</span>}
                 {item.location && <span className="text-sm text-zinc-400"> , {item.location}</span>}
               </div>

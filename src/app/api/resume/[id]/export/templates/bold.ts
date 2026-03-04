@@ -25,7 +25,7 @@ function buildBoldSectionContent(s: Section): string {
   if (s.type === 'education') {
     return `<div class="space-y-3">${(c.items || []).map((it: any) => `<div>
       <div class="flex items-baseline justify-between">
-        <div><span class="text-base font-bold text-black">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</span>${it.institution ? `<span class="text-sm text-zinc-500"> — ${esc(it.institution)}</span>` : ''}${it.location ? `<span class="text-sm text-zinc-400"> , ${esc(it.location)}</span>` : ''}</div>
+        <div><span class="text-base font-bold text-black">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</span>${it.institution ? `<span class="text-sm text-zinc-500"> — ${esc(it.institution)}</span>` : ''}${it.location ? `<span class="text-sm text-zinc-400"> , ${esc(it.location)}</span>` : ''}</div>
         <span class="shrink-0 text-xs text-zinc-400">${esc(it.startDate)} – ${esc(it.endDate || '')}</span>
       </div>
       ${it.gpa ? `<p class="text-sm text-zinc-500">GPA: ${esc(it.gpa)}</p>` : ''}

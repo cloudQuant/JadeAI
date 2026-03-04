@@ -110,7 +110,7 @@ function LuxeSectionContent({ section }: { section: any }) {
         {((content as EducationContent).items || []).map((item: any) => (
           <div key={item.id} className="border-l-2 pl-4" style={{ borderColor: GOLD }}>
             <div className="flex items-baseline justify-between">
-              <h3 className="text-sm font-bold" style={{ color: TEXT }}>{item.degree}{item.field ? ` in ${item.field}` : ''}</h3>
+              <h3 className="text-sm font-bold" style={{ color: TEXT }}>{item.degree}{item.field ? `, ${item.field}` : ''}</h3>
               <span className="shrink-0 text-xs italic" style={{ color: '#a8a29e' }}>{item.startDate} &ndash; {item.endDate}</span>
             </div>
             {item.institution && <p className="text-sm" style={{ color: GOLD }}>{item.institution}{item.location ? `, ${item.location}` : ''}</p>}

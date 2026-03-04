@@ -134,7 +134,7 @@ function CreativeSectionContent({ section }: { section: any }) {
               <span className="text-xs text-zinc-400">{item.startDate} – {item.endDate}</span>
             </div>
             <p className="text-sm text-zinc-600">
-              {item.degree}{item.field ? ` in ${item.field}` : ''}
+              {item.degree}{item.field ? `, ${item.field}` : ''}
               {item.location && <span className="text-zinc-400">, {item.location}</span>}
             </p>
             {item.gpa && <p className="text-xs text-zinc-500">GPA: {item.gpa}</p>}

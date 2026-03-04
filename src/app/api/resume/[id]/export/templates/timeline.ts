@@ -25,7 +25,7 @@ function buildTimelineSectionContent(s: Section): string {
     return `<div class="relative border-l-2 pl-6 ml-2" style="border-color:#e2e8f0">${items.map((it: any, idx: number) => `<div class="relative${idx < items.length - 1 ? ' pb-4' : ''}">
       <div class="absolute -left-[31px] top-1 h-4 w-4 rounded-full border-2 bg-white" style="border-color:${AC}"></div>
       <div class="flex items-baseline justify-between">
-        <div><span class="text-sm font-bold" style="color:${BG}">${esc(it.degree)}${it.field ? ` in ${esc(it.field)}` : ''}</span>${it.institution ? `<span class="text-sm text-zinc-500"> — ${esc(it.institution)}</span>` : ''}</div>
+        <div><span class="text-sm font-bold" style="color:${BG}">${esc(it.degree)}${it.field ? `, ${esc(it.field)}` : ''}</span>${it.institution ? `<span class="text-sm text-zinc-500"> — ${esc(it.institution)}</span>` : ''}</div>
         <span class="shrink-0 text-xs text-zinc-400">${esc(it.startDate)} – ${esc(it.endDate || '')}</span>
       </div>
       ${it.gpa ? `<p class="text-sm text-zinc-500">GPA: ${esc(it.gpa)}</p>` : ''}

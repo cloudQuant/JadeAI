@@ -131,7 +131,7 @@ function NeonSectionContent({ section }: { section: any }) {
               <h3 className="text-sm font-bold" style={{ color: CYAN }}>{item.institution}</h3>
               <span className="text-xs" style={{ color: TEXT_DIM }}>{item.startDate} - {item.endDate}</span>
             </div>
-            <p className="text-sm" style={{ color: TEXT }}>{item.degree}{item.field ? ` in ${item.field}` : ''}</p>
+            <p className="text-sm" style={{ color: TEXT }}>{item.degree}{item.field ? `, ${item.field}` : ''}</p>
             {item.gpa && <p className="text-xs" style={{ color: VIOLET }}>GPA: {item.gpa}</p>}
             {item.highlights?.length > 0 && (
               <ul className="mt-1 space-y-0.5">

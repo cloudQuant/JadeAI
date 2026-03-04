@@ -115,7 +115,7 @@ function MetroSectionContent({ section }: { section: any }) {
               <h3 className="text-sm font-bold" style={{ color: PRIMARY }}>{item.institution}</h3>
               <span className="text-xs text-zinc-400">{item.startDate} - {item.endDate}</span>
             </div>
-            <p className="text-sm text-zinc-600">{item.degree}{item.field ? ` in ${item.field}` : ''}</p>
+            <p className="text-sm text-zinc-600">{item.degree}{item.field ? `, ${item.field}` : ''}</p>
             {item.gpa && <p className="text-xs text-zinc-500">GPA: {item.gpa}</p>}
             {item.highlights?.length > 0 && (
               <ul className="mt-1 list-disc pl-4">

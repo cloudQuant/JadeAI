@@ -85,7 +85,7 @@ function DesignerSectionContent({ section }: { section: any }) {
           <div key={item.id} className="rounded-lg bg-zinc-50 p-4">
             <div className="flex items-baseline justify-between">
               <div>
-                <span className="text-sm font-bold text-black">{item.degree}{item.field ? ` in ${item.field}` : ''}</span>
+                <span className="text-sm font-bold text-black">{item.degree}{item.field ? `, ${item.field}` : ''}</span>
                 {item.institution && <span className="text-sm text-zinc-500"> — {item.institution}</span>}
               </div>
               <span className="shrink-0 text-xs text-zinc-400">{item.startDate} – {item.endDate}</span>

@@ -101,7 +101,7 @@ function JapaneseSectionContent({ section }: { section: any }) {
         {((content as EducationContent).items || []).map((item: any) => (
           <div key={item.id}>
             <div className="flex items-baseline justify-between">
-              <h3 className="text-sm font-normal" style={{ color: PRIMARY }}>{item.degree}{item.field ? ` in ${item.field}` : ''}</h3>
+              <h3 className="text-sm font-normal" style={{ color: PRIMARY }}>{item.degree}{item.field ? `, ${item.field}` : ''}</h3>
               <span className="shrink-0 text-[10px] font-light" style={{ color: ACCENT }}>{item.startDate} &ndash; {item.endDate}</span>
             </div>
             {item.institution && <p className="mt-0.5 text-xs font-light" style={{ color: ACCENT }}>{item.institution}{item.location ? `, ${item.location}` : ''}</p>}

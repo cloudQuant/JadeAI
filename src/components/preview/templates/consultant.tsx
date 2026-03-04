@@ -94,7 +94,7 @@ function ConsultantSectionContent({ section }: { section: any }) {
           <div key={item.id}>
             <div className="flex items-baseline justify-between">
               <div>
-                <span className="text-sm font-bold" style={{ color: GRAY_700 }}>{item.degree}{item.field ? ` in ${item.field}` : ''}</span>
+                <span className="text-sm font-bold" style={{ color: GRAY_700 }}>{item.degree}{item.field ? `, ${item.field}` : ''}</span>
                 {item.institution && <span className="text-sm text-gray-500"> - {item.institution}</span>}
                 {item.location && <span className="text-sm text-gray-400">, {item.location}</span>}
               </div>
